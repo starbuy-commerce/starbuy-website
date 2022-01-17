@@ -8,8 +8,8 @@ type Prop = {fixed: boolean};
 const Navbar = ({fixed}: Prop) => (
     <div className={`bg-white w-screen top-0 ${fixed ? "fixed" : ""}`}>
         <nav className='flex justify-between'>
-            <div>
-                <img src={logo} className="cursor-pointer md:pr-0 h-12 w-36 md:h-16 md:w-56 inline" alt="Starbuy Commerce" />
+            <div className="hidden sm:block">
+                <img src={logo} className="cursor-pointer md:pr-0 h-12 w-36 md:h-16 md:w-56" alt="Starbuy Commerce" />
             </div>
             <div id="searchbar" className="pt-1 md:pt-3">
                 <div className="md:mr-16 flex h-10 text-gray-500 border-2 rounded border-purple-700">
