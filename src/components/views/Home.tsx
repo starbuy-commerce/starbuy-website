@@ -4,6 +4,8 @@ import ProductCard from "../ProductCard";
 import tech from "../../images/category/tech.svg"
 import clothes from "../../images/category/clothes.svg"
 import books from "../../images/category/books.svg"
+import home from "../../images/category/home.svg"
+import guitarLogo from "../../images/category/guitar.svg"
 import bass from "../../images/test/bass.jpg"
 import ampli from "../../images/test/ampli.jpg"
 import guitar from "../../images/test/guitar.jpg"
@@ -13,10 +15,12 @@ const Home = () => (
     <>
         <Navbar fixed={true} />
         <div className="mt-28">
-            <div className="flex gap-6 mx-auto justify-center">
+            <div className="flex gap-6 justify-center">
                 <CategoryButton img={tech} size="w-10 h-10" category="Eletrônico" />
                 <CategoryButton img={clothes} size="w-10 h-10" category="Vestuário" />
                 <CategoryButton img={books} size="w-8 h-8" category="Livros" />
+                <CategoryButton img={guitarLogo} size="w-8 h-8" category="Música" />
+                <CategoryButton img={home} size="w-8 h-8" category="Casa" />
             </div>
 
             <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center">
