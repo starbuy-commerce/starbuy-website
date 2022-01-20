@@ -38,24 +38,19 @@ const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
 const Home = () => {
 
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState<any[]>([])
 
     useEffect(() => {
-        fetch(proxy + 'http://localhost:9000/products', {
+        fetch(proxy + '45.132.242.171:9000/products', {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'Access-Control-Allow-Origin': '*'
             },
         }).then(response => response.json())
-        .then(json => {
-            console.log("uwu")
-            setItems(json);
-            console.log(json);
-        })
+        .then(json => setItems(json))
         .catch(err => console.log(err))
     }, [])
-
 
     return (
         <>
@@ -70,14 +65,10 @@ const Home = () => {
                 </div>
 
                 <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center">
-                    {items.map(item => {
-                        alert(item)
-                        let product: Item = JSON.parse(item);
+                    {items.map(json => {
+                        const image: string = json.images[0];
+                        return (<ProductCard img={image} name={json.title} price={json.price.toFixed(2)}/>)
                     })}
-                    <ProductCard img={bass} name="Contrabaixo Fender 032 8900 Squier Modified Jaguar Bass 538" price={2899.00} />
-                    <ProductCard img={ampli} name="AMPLIFICADOR COMBO FENDER MUSTANG I V2 8 POL 20W RMS C/ EFEITO" price={1890.00} />
-                    <ProductCard img={guitar} name="Fender Classic Series '72 Telecaster Thinline Electric Guitar Natural" price={1230.00} />
-                    <ProductCard img={notebook} name="ASUS ROG Zephyrus S17 (2020) Laptop para jogos, 17,3' 300Hz IPS Type FHD, NVIDIA GeForce RTX 2080S, Intel Core i7-10875H, 32GB DDR4, 1TB PCIe SSD, Per-Key RGB KB, Thunderbolt 3, Windows 10, GX701LXS-XS78" price={59340.00} />
                 </div>
             </div>
         </>

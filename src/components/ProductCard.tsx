@@ -6,7 +6,7 @@ type Props = {
 
 const ProductCard = ({ img, name, price}: Props) => {
     var formated: string = name;
-    if(formated.length > 40) formated = name.substring(0, 39) + "..."
+    if(formated.length > 40) formated = name.substring(0, 40) + "..."
 
     return (
         <>
