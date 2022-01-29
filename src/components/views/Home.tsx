@@ -16,8 +16,10 @@ const Home = () => {
     const {category} = useParams();
     const [items, setItems] = useState<any[]>([])
 
+    let path = category == undefined? "products" : "products/category/" + category 
+
     useEffect(() => {
-        fetch(proxy + '45.132.242.171:9000/products', {
+        fetch(proxy + '45.132.242.171:9000/' + path, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
