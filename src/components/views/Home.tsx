@@ -6,49 +6,26 @@ import clothes from "../../images/category/clothes.svg"
 import books from "../../images/category/books.svg"
 import home from "../../images/category/home.svg"
 import guitarLogo from "../../images/category/guitar.svg"
-import bass from "../../images/test/bass.jpg"
-import ampli from "../../images/test/ampli.jpg"
-import guitar from "../../images/test/guitar.jpg"
-import notebook from "../../images/test/notebook.png"
 import { useState, useEffect } from "react";
-
-interface User {
-    username: string,
-    email: string,
-    name: string,
-    registration: string,
-    birthdate: string,
-    cellphones: Array<string>,
-    seller: boolean,
-    gender: number
-}
-
-interface Item {
-    identifier: string,
-    seller: User,
-    title: string,
-    price: number,
-    stock: number,
-    category: number,
-    tags: Array<string>,
-    images: Array<string>
-}
+import { useParams } from "react-router-dom";
 
 const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
 const Home = () => {
 
+    const {category} = useParams();
     const [items, setItems] = useState<any[]>([])
 
+    let path = category == undefined ? "products" : "product/category/" + category
+
     useEffect(() => {
-        fetch(proxy + '45.132.242.171:9000/products', {
+        fetch(proxy + '45.132.242.171:9000/' + path, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'Access-Control-Allow-Origin': '*'
             },
-        }).then(response => response.json())
-        .then(json => setItems(json))
+        }).then(response => response.json()).then(json => setItems(json))
         .catch(err => console.log(err))
     }, [])
 
