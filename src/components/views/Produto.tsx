@@ -21,7 +21,7 @@ const Produto = ({delivery, description}: Props) => {
     const [price, setPrice] = useState<number>(0)
     
     useEffect(() => {
-        fetch(proxy + '45.132.242.171:9000/product/' + id, {
+        fetch(proxy + '45.132.242.171:9000/item/' + id, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -56,9 +56,9 @@ const Produto = ({delivery, description}: Props) => {
                     </div>
 
                     <div className="w-3/6">
-                        {/* Preço do produto */}
+                        {/*COMENTARIO DE EXEMPLO*/}
                         <p className="font-inter text-4xl font-bold text-violet-900 static mt-4 ml-2">R$ {price.toFixed(2)}</p>
-                    
+                       
                         <div className="flex">
                             <div className="w-1/2">
                             {/* Estimativa de entrega */}

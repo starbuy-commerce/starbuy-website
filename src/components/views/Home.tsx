@@ -16,7 +16,7 @@ const Home = () => {
     const {category} = useParams();
     const [items, setItems] = useState<any[]>([])
 
-    let path = category == undefined? "products" : "products/category/" + category 
+    let path = category == undefined? "items" : "item/category/" + category 
 
     useEffect(() => {
         fetch(proxy + '45.132.242.171:9000/' + path, {
