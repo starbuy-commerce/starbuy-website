@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "../Navbar";
 
 type Props = {
@@ -8,7 +10,36 @@ type Props = {
     description: string
 }
 
-const Produto = ({img, formated, price, delivery, description}: Props) => {
+const proxy = 'https://blooming-coast-08475.herokuapp.com/'
+
+const Produto = ({delivery, description}: Props) => {
+
+    const {id} = useParams();
+
+    const [item, setItem] = useState<any>({})
+    const [imagem, setImg] = useState<string>("")
+    const [price, setPrice] = useState<number>(0)
+    
+    useEffect(() => {
+        fetch(proxy + '45.132.242.171:9000/product/' + id, {
+            method: 'GET', headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Access-Control-Allow-Origin': '*'
+            },
+        })
+        .then(response => response.json())
+        .then(json => {
+            setItem(json)
+            setImg(json.images[0])
+            setPrice(json.price)
+        }).catch(err => console.log(err))
+    }, [])
+
+    if(item == undefined || imagem == undefined || price == undefined) {
+        return null;
+    }
+
     return ( 
         
         <div>
@@ -16,18 +47,18 @@ const Produto = ({img, formated, price, delivery, description}: Props) => {
             <div className="mt-20 ml-5">
 
                 {/* Nome do produto */}
-                <p className="text-2xl  font-inter font-bold mt-2 ml-2 mr-2 text-gray-800">{formated}</p>
+                <p className="text-2xl  font-inter font-bold mt-2 ml-2 mr-2 text-gray-800">{item.title}</p>
                 <div className="flex">
 
-                    <div className="w-2/6">
-                    {/* Imagem do produto */}
-                    <img src={img} className="p-4 h-full"/>  {/* Consertar a altura!!! */}
+                <div className="w-2/6">
+                    <img src={imagem} className="p-4 h-full"/>  {/* Consertar a altura!!! */}
+
                     </div>
 
                     <div className="w-3/6">
                         {/* Preço do produto */}
-                        <p className="font-inter text-4xl font-bold text-violet-900 static mt-4 ml-2">R$ {price}</p>
-                       
+                        <p className="font-inter text-4xl font-bold text-violet-900 static mt-4 ml-2">R$ {price.toFixed(2)}</p>
+                    
                         <div className="flex">
                             <div className="w-1/2">
                             {/* Estimativa de entrega */}
@@ -41,7 +72,7 @@ const Produto = ({img, formated, price, delivery, description}: Props) => {
                         </div>
 
                         {/* Descrição do produto */}
-                        <p className="text-md font-inter text-justify mt-2 ml-2 mr-2 text-gray-800">{description}</p>
+                        <p className="text-md font-inter text-justify mt-2 ml-2 mr-2 text-gray-800">{item.description}</p>
                     </div>
 
                     <div className="w-1/6">
