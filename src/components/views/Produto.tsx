@@ -25,7 +25,7 @@ const Produto = ({img, formated, price, delivery, description}: Props) => {
                     </div>
 
                     <div className="w-3/6">
-                        {/* Preço do produto */}
+                        {/*COMENTARIO DE EXEMPLO*/}
                         <p className="font-inter text-4xl font-bold text-violet-900 static mt-4 ml-2">R$ {price}</p>
                        
                         <div className="flex">
