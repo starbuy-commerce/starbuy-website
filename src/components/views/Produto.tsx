@@ -1,4 +1,3 @@
-//Modesto e July
 import Navbar from "../Navbar";
 
 type Props = {
@@ -15,12 +14,14 @@ const Produto = ({img, formated, price, delivery, description}: Props) => {
         <div>
             <Navbar fixed={true} />
             <div className="mt-20 ml-5">
+
                 {/* Nome do produto */}
                 <p className="text-2xl  font-inter font-bold mt-2 ml-2 mr-2 text-gray-800">{formated}</p>
                 <div className="flex">
+
                     <div className="w-2/6">
                     {/* Imagem do produto */}
-                    <img src={img} className="p-4 h-full"/>
+                    <img src={img} className="p-4 h-full"/>  {/* Consertar a altura!!! */}
                     </div>
 
                     <div className="w-3/6">
@@ -35,7 +36,7 @@ const Produto = ({img, formated, price, delivery, description}: Props) => {
 
                             <div className="w-1/2 text-left">
                             {/* Botão para adicionar no carrinho */}
-                            <button className="text-sm font-inter font-semibold bg-transparent hover:bg-yellow-500 text-yellow-500  hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded">Adicionar ao carrinho</button>
+                            <button className="text-sm font-inter font-semibold bg-transparent hover:bg-yellow-500 text-yellow-500  hover:text-white py-2 px-3 border border-yellow-500 hover:border-transparent rounded">Adicionar ao carrinho</button>
                             </div>
                         </div>
 
