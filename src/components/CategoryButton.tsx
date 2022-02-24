@@ -9,7 +9,7 @@ type Props = {
 
 const CategoryButton = ({img, category, size, id}: Props) => {
 
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     return (
         <div className="cursor-pointer flew-grow" onClick={() => {navigate("category/" + id); window.location.reload()}}>
