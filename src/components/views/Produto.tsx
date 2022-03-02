@@ -12,7 +12,7 @@ type Props = {
 
 const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
-const Produto = ({delivery, description}: Props) => {
+const Produto = () => {
 
     const {id} = useParams();
 
@@ -62,7 +62,7 @@ const Produto = ({delivery, description}: Props) => {
                         <div className="flex">
                             <div className="w-1/2">
                             {/* Estimativa de entrega */}
-                            <p className="text-sm font-inter font-semibold mt-2 ml-2 mr-2 text-gray-800">Estimativa de entrega: {delivery}</p>
+                            <p className="text-sm font-inter font-semibold mt-2 ml-2 mr-2 text-gray-800">Estimativa de entrega: Seila</p>
                             </div>
 
                             <div className="w-1/2 text-left">
