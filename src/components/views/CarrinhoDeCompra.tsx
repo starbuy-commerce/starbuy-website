@@ -26,7 +26,7 @@ const CarrinhoDeCompra = () => {
     const [price, setPrice] = useState<number>(0)
 
     useEffect(() => {
-        fetch(proxy + '45.132.242.171:9000/cart' + path, {
+        fetch(proxy + 'https://tcc-rest-crud.herokuapp.com/cart' + path, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

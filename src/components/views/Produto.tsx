@@ -21,7 +21,7 @@ const Produto = ({delivery, description}: Props) => {
     const [price, setPrice] = useState<number>(0)
     
     useEffect(() => {
-        fetch(proxy + '45.132.242.171:9000/item/' + id, {
+        fetch(proxy + 'https://tcc-rest-crud.herokuapp.com/item/' + id, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
