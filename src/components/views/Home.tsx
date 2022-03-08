@@ -19,7 +19,7 @@ const Home = () => {
     let path = category == undefined? "items" : "item/category/" + category 
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-rest-crud.herokuapp.com/' + path, {
+        fetch(proxy + 'https://tcc-web-api.herokuapp.com/' + path, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
