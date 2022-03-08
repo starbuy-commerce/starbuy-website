@@ -44,7 +44,7 @@ const Home = () => {
 
                 <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center">
                     {items.map(json => {
-                        const image: string = json.images[0];
+                        const image: string = json.assets[0];
                         return (<ProductCard img={image} name={json.title} price={json.price.toFixed(2)} id={json.identifier}/>)
                     })}
                 </div>
