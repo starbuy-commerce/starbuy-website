@@ -22,8 +22,8 @@ const Navbar = ({fixed}: Prop) => (
                 </div>
             </div>
             <ul className="flex flex-row text-white">
-                <TransitionButton duration={200} src={cart} />
-                <TransitionButton duration={200} src={login} />
+                <TransitionButton duration={200} src={cart} target_url = "/cart"/>
+                <TransitionButton duration={200} src={login} target_url="/login" />
             </ul>
         </nav>
         <div className="h-1 bg-purple-700"></div>
