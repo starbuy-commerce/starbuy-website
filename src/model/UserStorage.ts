@@ -56,7 +56,8 @@ const UserStorage = (function() {
     }
 
     function retrieveToken(): string | null {
-        return ""
+        const [cookies] = useCookies(["access_token"]);
+        return cookies + ""
     }
 
     return {
