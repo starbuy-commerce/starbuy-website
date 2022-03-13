@@ -5,9 +5,9 @@ import login from '../images/login.svg';
 import { useCookies } from "react-cookie";
 import UserStorage from "../model/UserStorage";
 
-type Prop = { fixed: boolean };
+type Prop = { fixed: boolean, bottomBar: boolean };
 
-const Navbar = ({ fixed }: Prop) => {
+const Navbar = ({ fixed, bottomBar }: Prop) => {
 
     const [cookies, setCookie] = useCookies();
 
@@ -35,7 +35,7 @@ const Navbar = ({ fixed }: Prop) => {
                         <img src={UserStorage.getPfp()} onClick={() => window.location.href = "/user"} className='border-2 rounded-full border-indigo-600 w-8 h-8 mr-8 mt-4 cursor-pointer'/>}
                 </ul>
             </nav>
-            <div className="h-1 bg-purple-700"></div>
+            {bottomBar && <div className="h-1 bg-purple-700"></div>}
         </div>
     );
 }

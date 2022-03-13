@@ -43,7 +43,7 @@ const Produto = () => {
     return ( 
         
         <div>
-            <Navbar fixed={true} />
+            <Navbar fixed={true} bottomBar={true}/>
             <div className="mt-20 ml-5">
 
                 {/* Nome do produto */}

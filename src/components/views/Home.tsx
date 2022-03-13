@@ -35,7 +35,7 @@ const Home = () => {
 
     return (
         <>
-            <Navbar fixed={true} />
+            <Navbar fixed={true} bottomBar={true}/>
             <div className="mt-28">
                 <div className="flex gap-6 justify-center">
                     <CategoryButton img={tech} size="w-10 h-10" category="Eletrônico" id={1} />
