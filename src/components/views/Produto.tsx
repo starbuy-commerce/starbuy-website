@@ -31,8 +31,8 @@ const Produto = () => {
         .then(response => response.json())
         .then(json => {
             setItem(json)
-            setImg(json.images[0])
-            setPrice(json.price)
+            setImg(json.assets[0])
+            setPrice(json.item.price)
         }).catch(err => console.log(err))
     }, [])
 
@@ -72,7 +72,7 @@ const Produto = () => {
                         </div>
 
                         {/* Descrição do produto */}
-                        <p className="text-md font-inter text-justify mt-2 ml-2 mr-2 text-gray-800">{item.description}</p>
+                        <p className="text-md font-inter text-justify mt-2 ml-2 mr-2 text-gray-800">{item.item.description}</p>
                     </div>
 
                     <div className="w-1/6">
