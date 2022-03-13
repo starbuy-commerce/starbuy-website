@@ -50,16 +50,6 @@ const UserStorage = (function() {
         localStorage.removeItem("username");
     }
 
-    function setToken(token: string) {
-        const [cookies, setCookie] = useCookies(['access_token']);
-        setCookie('access_token', token, { path: '/' });
-    }
-
-    function retrieveToken(): string | null {
-        const [cookies] = useCookies(["access_token"]);
-        return cookies + ""
-    }
-
     return {
         getName: getName,
         setName: setName,
@@ -70,7 +60,7 @@ const UserStorage = (function() {
         getPfp: getPfp,
         setPfp: setPfp,
         getCity: getCity,
-        setCity: setCity
+        setCity: setCity,
       }
 })();
 

@@ -7,10 +7,10 @@ const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
 const LoginForm = () => {
 
-    const [username, setUsername] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const [jwt, setJwt] = useCookies(['access_token']);
-    const [error, setError] = useState<string>("")
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [cookies, setCookie] = useCookies();
+    const [error, setError] = useState<string>("")    
 
     function handleUsernameChange(event: { target: HTMLInputElement; }) {
         setUsername(() => event.target.value)
@@ -21,6 +21,11 @@ const LoginForm = () => {
     }
 
     const handleLogin = () => {
+        if(username === "" || password === "")  {
+            setError("Digite suas credenciais");
+            return
+        }
+
         fetch(proxy + 'https://tcc-web-api.herokuapp.com/login', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json',
@@ -31,12 +36,19 @@ const LoginForm = () => {
         }).then(response => response.json())
             .then(json => {
                 if (json.hasOwnProperty('error')) {
-                    setError(json.error)
+                    setError(json.error);
+                    setPassword("");
+                    setUsername("");
                 } else {
-                    UserStorage.
+                    setCookie('access_token', json.jwt, { path: '/' });
+                    UserStorage.setEmail(json.user.email);
+                    UserStorage.setUsername(json.user.username);
+                    UserStorage.setName(json.user.name);
+                    UserStorage.setCity(json.user.city);
+                    UserStorage.setPfp(json.user.profile_picture);
+                    setError("");
                 }
             })
-            .then()
             .catch(err => console.log(err))
     }
 
@@ -54,7 +66,7 @@ const LoginForm = () => {
                             <p className="font-rubik font-bold md:max-w-lg text-sm text-gray-600 mt-16">Faça login com a sua conta. Não tem uma?
                                 <a href="" className="text-yellow-500"> Registre-se</a>
                             </p>
-                            <p id="error" className="font-rubik font-bold md:max-w-lg text-sm text-red-400 mt-4">
+                            <p id="error" className="font-rubik font-bold md:max-w-lg text-sm text-rose-600 mt-4">
                                 {error}
                             </p>
 
