@@ -30,10 +30,10 @@ const User = () => {
             <div className="w-full h-24 from-indigo-600 via-indigo-600 to-indigo-800 bg-gradient-to-r relative visible">
                 <div>
                     <p className="font-inter text-white absolute mt-8 ml-48 font-bold text-xl">
-                        {user.name.toUpperCase()}
+                        {UserStorage.getName().toUpperCase()}
                     </p>
                     <p className="font-inter text-white absolute mt-16 ml-48 font-light text-sm">
-                        {user.city.toUpperCase()}
+                        {UserStorage.getCity().toUpperCase()}
                     </p>
                 </div>
             </div>

@@ -15,7 +15,7 @@ const Navbar = ({ fixed, bottomBar }: Prop) => {
         <div className={`bg-white w-screen top-0 ${fixed ? "fixed" : ""}`}>
             <nav className='flex justify-between'>
                 <div className="hidden sm:block">
-                    <img src={logo} className="cursor-pointer md:pr-0 h-12 w-36 md:h-16 md:w-56" alt="Starbuy Commerce" onClick={() => window.location.href = "/"} />
+                    <img src={logo} className="cursor-pointer md:pr-0 h-16 w-36 md:h-16 md:w-48" alt="Starbuy Commerce" onClick={() => window.location.href = "/"} />
                 </div>
                 <div id="searchbar" className="pt-1 md:pt-3">
                     <div className="md:mr-16 flex h-10 text-gray-500 border-2 rounded border-purple-700">
@@ -35,7 +35,7 @@ const Navbar = ({ fixed, bottomBar }: Prop) => {
                         <img src={UserStorage.getPfp()} onClick={() => window.location.href = "/user"} className='border-2 rounded-full border-indigo-600 w-8 h-8 mr-8 mt-4 cursor-pointer'/>}
                 </ul>
             </nav>
-            {bottomBar && <div className="h-1 bg-purple-700"></div>}
+            {bottomBar && <div className="h-1 bg-[#6366F1]"></div>}
         </div>
     );
 }
