@@ -43,7 +43,7 @@ const User = () => {
                     </p>
                 </div>
             </div>
-            <img src={profilePicture} className="rounded-full border-yellow-500 border-4 w-32 h-32 absolute top-24 ml-10"/>
+            <img src={profilePicture} className="rounded-full border-[#FFDD4A] border-4 w-32 h-32 absolute top-32 ml-10"/>
         </div>
     )
 } 

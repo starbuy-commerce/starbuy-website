@@ -36,7 +36,7 @@ const Home = () => {
     return (
         <>
             <Navbar fixed={true} bottomBar={true}/>
-            <div className="mt-28">
+            <div className="mt-32">
                 <div className="flex gap-6 justify-center">
                     <CategoryButton img={tech} size="w-10 h-10" category="Eletrônico" id={1} />
                     <CategoryButton img={clothes} size="w-10 h-10" category="Vestuário" id={2} />
