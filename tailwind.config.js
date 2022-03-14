@@ -12,6 +12,10 @@ module.exports = {
         'rubik': ['Rubik']
       }
     },
+    colors: {
+      'starbuy-indigo': '#6366F1',
+      'starbuy-yellow': '#FFDD4A'
+    }
   },
   variants: {
     extend: {},

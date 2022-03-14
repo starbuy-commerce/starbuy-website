@@ -35,7 +35,7 @@ const Navbar = ({ fixed, bottomBar }: Prop) => {
                         <img src={UserStorage.getPfp()} onClick={() => window.location.href = "/user"} className='border-4 rounded-full border-indigo-600 w-12 h-12 mr-8 cursor-pointer'/>}
                 </ul>
             </nav>
-            {bottomBar && <div className="h-1 bg-[#6366F1]"></div>}
+            {bottomBar && <div className="h-1 bg-starbuy-indigo"></div>}
         </div>
     );
 }
