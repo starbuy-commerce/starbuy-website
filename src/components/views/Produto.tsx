@@ -45,7 +45,7 @@ const Produto = () => {
         
         <div>
             <Navbar fixed={true} bottomBar={true}/>
-            <div className="mt-40 bg-yellow-100 p-5">
+            <div className="mt-28 bg-yellow-100 p-5">
                 <div className="flex p-5 bg-white rounded-lg">
                     <div className="w-2/6 rounded-lg border-yellow-400 ml-12 mr-12">
                         <img src={imagem} className="p-4"/>
