@@ -24,7 +24,7 @@ const Produto = () => {
     const [title, setTitle] = useState<string>("")
     
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/item/' + id, {
+        fetch(proxy + 'https://tcc-web-api.herokuapp.com/item/' + id + "?reviews=true", {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
