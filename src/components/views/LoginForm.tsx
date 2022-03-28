@@ -46,6 +46,7 @@ const LoginForm = () => {
                     UserStorage.setName(json.user.name);
                     UserStorage.setCity(json.user.city);
                     UserStorage.setPfp(json.user.profile_picture);
+                    window.location.href = "/"
                     setError("");
                 }
             })
