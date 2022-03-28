@@ -15,17 +15,18 @@ const User = () => {
     const path = username == undefined ? UserStorage.getUsername() : "/" + username;
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/user/' + path, {
+        fetch(proxy + 'https://tcc-web-api.herokuapp.com/user/' + path + "?includeItems=true", {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'Access-Control-Allow-Origin': '*'
-            },
+            }
         }).then(response => response.json())
         .then(json => {
-            setPfp(json.profile_picture);
-            setName(json.name);
-            setCity(json.city);
+            console.log(json)
+            setPfp(json.user.profile_picture);
+            setName(json.user.name);
+            setCity(json.user.city);
         })
         .catch(err => console.log(err))
     }, [])
