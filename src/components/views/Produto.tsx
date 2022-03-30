@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "../Navbar";
 import addToCart from '../../images/add-to-cart.svg';
 import buyNow from '../../images/buy-now.svg';
+import { useCookies } from "react-cookie";
 
 type Props = {
     img: string,
@@ -22,6 +23,7 @@ const Produto = () => {
     const [preco, setPreco] = useState<number>(0)
     const [description, setDesc] = useState<string>("")
     const [title, setTitle] = useState<string>("")
+    const [cookies, setCookie] = useCookies();
     
     useEffect(() => {
         fetch(proxy + 'https://tcc-web-api.herokuapp.com/item/' + id + "?reviews=true", {
@@ -40,6 +42,25 @@ const Produto = () => {
         })
         .catch(err => console.log(err))
     }, [])
+
+    function postCart() {
+        fetch(proxy + 'https://tcc-web-api.herokuapp.com/cart/', {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization:': "Bearer " + cookies.access_token
+            },
+        })
+        .then(response => response.json())
+        .then(json => {
+            setTitle(json.item.title)
+            setImagem(json.assets[0]);
+            setPreco(json.item.price);
+            setDesc(json.item.description);
+        })
+        .catch(err => console.log(err))
+    }
 
     return ( 
         
@@ -61,7 +82,7 @@ const Produto = () => {
 
                         <p className="text-md font-inter text-justify mt-8 ml-2 mr-2 text-gray-800">{description}</p>
                         <div className="float-right flex mt-6">
-                            <div className="mr-4 text-sm font-inter font-semibold bg-transparent text-indigo-500 py-2 px-3 border border-indigo-500 rounded hover:cursor-pointer">
+                            <div onClick={postCart} className="mr-4 text-sm font-inter font-semibold bg-transparent text-indigo-500 py-2 px-3 border border-indigo-500 rounded hover:cursor-pointer">
                                 <div className="flex">
                                     <img src={addToCart} alt="" />
                                     <span className="ml-2">Adicionar ao carrinho</span>
