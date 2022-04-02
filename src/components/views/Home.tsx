@@ -26,10 +26,7 @@ const Home = () => {
                 'Access-Control-Allow-Origin': '*'
             },
         }).then(response => response.json())
-        .then(json => {
-            setItems(json)
-            console.log(json)
-        })
+        .then(json => setItems(json))
         .catch(err => console.log(err))
     }, [])
 

@@ -19,7 +19,7 @@ type Props = {
 
 const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
-const CarrinhoDeCompra = () => {
+const Cart = () => {
 
     const [item, setItem] = useState<any>({})
     const [imagem, setImg] = useState<string>("")
@@ -47,4 +47,4 @@ const CarrinhoDeCompra = () => {
     )
 }
 
-export default CarrinhoDeCompra
+export default Cart
