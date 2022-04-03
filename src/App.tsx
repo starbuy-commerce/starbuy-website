@@ -13,7 +13,7 @@ function App() {
   const [cookies, setCookie] = useCookies();
 
   return (
-    <div className="pb-10">
+    <div>
       <Router>
       <Routes>
         <Route path="/" element={<Orders/>}></Route>
