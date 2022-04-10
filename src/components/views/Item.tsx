@@ -15,7 +15,7 @@ type Props = {
 
 const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
-const Produto = () => {
+export default function Item() {
 
     const {id} = useParams();
 
@@ -102,5 +102,3 @@ const Produto = () => {
         </div>
     )
 }
-
-export default Produto

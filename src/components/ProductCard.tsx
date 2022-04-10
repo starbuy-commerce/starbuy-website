@@ -5,7 +5,7 @@ type Props = {
     id: string
 }
 
-const ProductCard = ({ img, name, price, id }: Props) => {
+export default function ProductCard({ img, name, price, id }: Props) {
     var formated: string = name;
     if(formated.length > 40) formated = name.substring(0, 40) + "..."
 
@@ -21,5 +21,3 @@ const ProductCard = ({ img, name, price, id }: Props) => {
         </>
     );
 }
-
-export default ProductCard;

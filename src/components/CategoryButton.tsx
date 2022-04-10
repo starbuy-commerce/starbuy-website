@@ -7,7 +7,7 @@ type Props = {
     id: number
 }
 
-const CategoryButton = ({img, category, size, id}: Props) => {
+export default function CategoryButton({img, category, size, id}: Props) {
 
     return (
         <div className="cursor-pointer flew-grow" onClick={() => window.location.href="/category/" + id}>
@@ -18,5 +18,3 @@ const CategoryButton = ({img, category, size, id}: Props) => {
         </div>
     );
 }
-
-export default CategoryButton;

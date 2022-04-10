@@ -5,7 +5,7 @@ import UserStorage from '../../model/UserStorage';
 
 const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
-const LoginForm = () => {
+export default function LoginForm() {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -94,5 +94,3 @@ const LoginForm = () => {
 
     );
 }
-
-export default LoginForm

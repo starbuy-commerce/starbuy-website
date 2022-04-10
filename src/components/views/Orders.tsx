@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Navbar from "../Navbar";
 import delivery from "../../images/delivery.svg"
-import ConfigurationSideBar from "./ConfigurationSideBar";
+import ConfigurationSideBar from "../ConfigurationSideBar";
 
-const Orders = () => {
+export default function Orders() {
 
     const proxy = 'https://blooming-coast-08475.herokuapp.com/'
     const [cookies, setCookie] = useCookies();
@@ -57,5 +57,3 @@ const Orders = () => {
     )
 
 }
-
-export default Orders
