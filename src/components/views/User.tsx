@@ -5,7 +5,7 @@ import Navbar from "../Navbar";
 
 const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
-const User = () => {
+export default function User() {
     
     const [name, setName] = useState<string>("")
     const [city, setCity] = useState<string>("")
@@ -48,5 +48,3 @@ const User = () => {
         </div>
     )
 } 
-
-export default User;

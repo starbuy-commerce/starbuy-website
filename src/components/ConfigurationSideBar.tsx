@@ -23,7 +23,7 @@ export default function ConfigurationSideBar() {
     const [selected, setSelected] = useState<number>(1);
 
     return (
-        <div className="w-96 h-screen border-r-2 h-full border-indigo-400">
+        <div className="w-96 h-screen border-r-2 border-indigo-400">
             {configuration.map(config => {
                 var fill = selected == config.id ? "fill-white" : "fill-[#4A4A4A]"
                 var bg = selected == config.id ? "bg-indigo-400" : "bg-white"
