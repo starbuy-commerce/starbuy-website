@@ -20,7 +20,7 @@ type Prop = { visible: boolean};
 
 export default function UserDropDownMenu({visible}: Prop) {
     return (
-        <div className={`absolute z-10 float-right right-10 top-[-50px] ${visible ? "visible" : "invisible"} bg-white rounded-lg mx-auto mt-32 w-72 border-[1px] border-yellow-300 overflow-auto`}>
+        <div className={`absolute transition-opacity duration-200 ${visible ? "opacity-100" : "opacity-0"} z-10 float-right right-10 top-[-50px] ${visible ? "visible" : "invisible"} bg-white rounded-lg mx-auto mt-32 w-72 border-[1px] border-yellow-300 overflow-auto`}>
             {sections.map((section, i, arr) => {
                 return (
                     <>

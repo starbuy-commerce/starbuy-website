@@ -35,10 +35,10 @@ export default function Item() {
         })
         .then(response => response.json())
         .then(json => {
-            setTitle(json.item.title)
-            setImagem(json.assets[0]);
-            setPreco(json.item.price);
-            setDesc(json.item.description);
+            setTitle(json.item.item.title)
+            setImagem(json.item.assets[0]);
+            setPreco(json.item.item.price);
+            setDesc(json.item.item.description);
         })
         .catch(err => console.log(err))
     }, [])
@@ -54,10 +54,11 @@ export default function Item() {
         })
         .then(response => response.json())
         .then(json => {
-            setTitle(json.item.title)
-            setImagem(json.assets[0]);
-            setPreco(json.item.price);
-            setDesc(json.item.description);
+            console.log(json);
+            setTitle(json.item.item.title)
+            setImagem(json.item.assets[0]);
+            setPreco(json.item.item.price);
+            setDesc(json.item.item.description);
         })
         .catch(err => console.log(err))
     }
