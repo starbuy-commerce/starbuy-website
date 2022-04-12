@@ -24,7 +24,7 @@ export default function UserDropDownMenu({visible}: Prop) {
             {sections.map((section, i, arr) => {
                 return (
                     <>
-                        <div className="flex px-2 hover:cursor-pointer hover:bg-gray-100 text-yel text-gray-700 fill-gray-700">
+                        <div className="flex px-2 hover:cursor-pointer hover:bg-gray-100 text-yel text-gray-700 fill-gray-700" onClick={() => window.location.href = `${section.path}`}>
                             <svg className={"my-auto w-6 h-6 ml-2"}><path d={section.svg}/></svg>
                             <p className="font-inter ml-6 font-bold my-3">{section.name}</p>
                             </div>
