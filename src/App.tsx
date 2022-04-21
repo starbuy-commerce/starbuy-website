@@ -8,6 +8,7 @@ import User from './components/views/User';
 import Cart from './components/views/Cart';
 import Orders from './components/views/Orders';
 import UserDropDownMenu from './components/UserDropDownMenu';
+import Settings from './components/views/Settings';
 
 function App() {
 
@@ -18,13 +19,14 @@ function App() {
       <Router>
       <Routes>
 
-        <Route path="/" element={<Home/>}></Route>
+        <Route path="/" element={<Settings/>}></Route>
         <Route path="/category/:category" element={<Home/>} ></Route>
         <Route path="/login" element={<LoginForm/>}></Route>
         <Route path="/item/:id" element={<Item/>}></Route>
         <Route path="/user" element={<User/>}/>
         <Route path="/user/:username" element={<User/>}/>
         <Route path="/orders" element={<Orders/>}/>
+        <Route path="/settings" element={<Settings/>}/>
       </Routes>
     </Router>
     </div>

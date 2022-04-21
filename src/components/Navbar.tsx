@@ -12,15 +12,7 @@ type Prop = { fixed: boolean, bottomBar: boolean };
 export default function Navbar({ fixed, bottomBar }: Prop) {
 
     const [cookies, setCookie] = useCookies();
-    const [dropdownToggled, setDropdown] = useState<boolean>(false)
-
-    function renderDropdown() {
-        if (dropdownToggled) {
-            setDropdown(false)
-        } else {
-            setDropdown(true)
-        }
-    }
+    const [dropdownToggled, setDropdown] = useState<boolean>(false);
 
     return (
         <>
@@ -45,7 +37,7 @@ export default function Navbar({ fixed, bottomBar }: Prop) {
                         {cookies.access_token == undefined &&
                             <TransitionButton duration={200} src={login} target_url="/login" />}
                         {cookies.access_token != undefined &&
-                            <img src={UserStorage.getPfp()} onClick={() => renderDropdown()} className='rounded-full border-indigo-600 w-10 h-10 mr-12 mt-2 border-[3px] cursor-pointer' />}
+                            <img src={UserStorage.getPfp()} onClick={() => dropdownToggled ? setDropdown(false) : setDropdown(true)} className='rounded-full border-indigo-600 w-10 h-10 mr-12 mt-2 border-[3px] cursor-pointer' />}
                     </ul>
                 </nav>
                 {bottomBar && <div className="h-1 bg-indigo-400"></div>}
