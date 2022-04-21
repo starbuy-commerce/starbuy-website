@@ -19,7 +19,7 @@ function App() {
       <Router>
       <Routes>
 
-        <Route path="/" element={<Settings/>}></Route>
+        <Route path="/" element={<Home/>}></Route>
         <Route path="/category/:category" element={<Home/>} ></Route>
         <Route path="/login" element={<LoginForm/>}></Route>
         <Route path="/item/:id" element={<Item/>}></Route>
