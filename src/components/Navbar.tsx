@@ -17,13 +17,13 @@ export default function Navbar({ fixed, bottomBar }: Prop) {
     return (
         <>
             <UserDropDownMenu visible={dropdownToggled}/>
-            <div className={`bg-white top-0 w-screen ${fixed ? "fixed" : ""}`}>
+            <div className={`bg-white top-0 w-screen z-[99] ${fixed ? "fixed" : ""}`}>
                 <nav className='flex justify-between'>
                     <div className="hidden sm:block">
                         <img src={logo} className="cursor-pointer md:pr-0 h-16 w-36 md:h-16 md:w-56 m-4" alt="Starbuy Commerce" onClick={() => window.location.href = "/"} />
                     </div>
                     <div id="searchbar" className="pt-1 md:pt-3 mt-4">
-                        <div className="md:mr-16 flex h-10 text-gray-500 border-2 rounded border-purple-700">
+                        <div className="ml-4 mb-3 md:mr-16 flex h-10 text-gray-500 border-2 rounded border-purple-700">
                             <input className="w-48 md:w-96 sm:w-16 pl-3 text-sm focus-within:outline-none" type="text" placeholder="Pesquisar produto ou loja" />
                             <button className="flex items-center justify-center px-4 border-l hover:bg-yellow-300 transition duration-500 ease-in-out">
                                 <svg className="w-6 h-6 text-indigo-700" fill="#4338CA" viewBox="0 0 24 24">
@@ -32,7 +32,7 @@ export default function Navbar({ fixed, bottomBar }: Prop) {
                             </button>
                         </div>
                     </div>
-                    <ul className="flex flex-row text-white mt-6">
+                    <ul className="flex flex-row text-white my-auto">
                         {cookies.access_token == undefined &&
                             <TransitionButton duration={200} src={login} target_url="/login" />}
                         {cookies.access_token != undefined &&

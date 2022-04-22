@@ -19,8 +19,6 @@ class App extends Component {
   }
 
   render() {
-    const [cookies, setCookie] = useCookies();
-    
     return (
       <div ref={this.container as React.RefObject<HTMLDivElement>}>
         <Router>

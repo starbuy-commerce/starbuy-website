@@ -44,10 +44,10 @@ const Home = (props: any) => {
                 </div>
                 
                 <div className="md:hidden">
-                    <CategoryDropdown container={props.container}/>
+                    <CategoryDropdown/>
                 </div>
 
-                <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center">
+                <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center z-0">
                     {items.map(json => {
                         const image: string = json.assets[0];
                         return (<ProductCard img={image} name={json.item.title} price={json.item.price.toFixed(2)} id={json.item.identifier} />)
