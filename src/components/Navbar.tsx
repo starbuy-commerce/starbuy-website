@@ -16,7 +16,6 @@ export default function Navbar({ fixed, bottomBar }: Prop) {
 
     return (
         <>
-            <UserDropDownMenu visible={dropdownToggled}/>
             <div className={`bg-white top-0 w-screen z-[99] ${fixed ? "fixed" : ""}`}>
                 <nav className='flex justify-between'>
                     <div className="hidden sm:block">
@@ -35,8 +34,7 @@ export default function Navbar({ fixed, bottomBar }: Prop) {
                     <ul className="flex flex-row text-white my-auto">
                         {cookies.access_token == undefined &&
                             <TransitionButton duration={200} src={login} target_url="/login" />}
-                        {cookies.access_token != undefined &&
-                            <img src={UserStorage.getPfp()} onClick={() => dropdownToggled ? setDropdown(false) : setDropdown(true)} className='rounded-full border-indigo-600 w-10 h-10 mr-12 mt-2 border-[3px] cursor-pointer' />}
+                        {cookies.access_token != undefined && <UserDropDownMenu visible={true}/>}
                     </ul>
                 </nav>
                 {bottomBar && <div className="h-1 bg-indigo-400"></div>}

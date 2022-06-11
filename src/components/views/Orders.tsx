@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Navbar from "../Navbar";
 import delivery from "../../images/delivery.svg"
-import ConfigurationSideBar from "../ConfigurationSideBar";
 
 export default function Orders() {
 

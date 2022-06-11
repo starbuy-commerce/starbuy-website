@@ -1,10 +1,10 @@
+import React, { useState } from "react";
 import { useCookies } from "react-cookie";
+import UserStorage from "../model/UserStorage";
 
-type Prop = { visible: boolean};
+type Prop = { visible: boolean };
 
-export default function UserDropDownMenu({visible}: Prop) {
-
-    const [cookies, setCookie, removeCookie] = useCookies();
+export default function UserDropDownMenu({ visible }: Prop) {
 
     const sections = [
         {
@@ -19,23 +19,29 @@ export default function UserDropDownMenu({visible}: Prop) {
         },
         {
             name: "Minhas compras",
-            svg: "M20 7h-4v-3c0-2.209-1.791-4-4-4s-4 1.791-4 4v3h-4l-2 17h20l-2-17zm-11-3c0-1.654 1.346-3 3-3s3 1.346 3 3v3h-6v-3zm-1 5v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h2.222l.471 4h-13.385l.471-4h2.221z", 
+            svg: "M20 7h-4v-3c0-2.209-1.791-4-4-4s-4 1.791-4 4v3h-4l-2 17h20l-2-17zm-11-3c0-1.654 1.346-3 3-3s3 1.346 3 3v3h-6v-3zm-1 5v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h2.222l.471 4h-13.385l.471-4h2.221z",
             trigger: () => window.location.href = "/orders"
         },
         {
             name: "Meu carrinho",
             svg: "M24 3l-.743 2h-1.929l-3.474 12h-13.239l-4.615-11h16.812l-.564 2h-13.24l2.937 7h10.428l3.432-12h4.195zm-15.5 15c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.9-7-1.9 7c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z",
-            trigger: () => window.location.href ="/cart"
+            trigger: () => window.location.href = "/cart"
         },
         {
             name: "Sair",
             svg: "M0 2v20h14v-2h-12v-16h12v-2h-14zm18 7.408l2.963 2.592-2.963 2.592v-1.592h-8v-2h8v-1.592zm-2-4.408v4h-8v6h8v4l8-7-8-7z",
-            trigger: () => {removeCookie("access_token"); window.location.href = "/";}
+            trigger: () => { removeCookie("access_token"); window.location.href = "/"; }
         }
     ]
 
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const [isActive, setActive] = useState(false);
+    const onClick = () => setActive(!isActive);
+
     return (
-        <div className={`absolute transition-opacity duration-200 ${visible ? "opacity-100" : "opacity-0"} z-10 float-right right-10 top-[-50px] ${visible ? "visible" : "invisible"} bg-white rounded-lg mx-auto mt-32 w-72 border-[1px] border-yellow-300 overflow-auto`}>
+        <div className="flex flex-col">
+            <img src={UserStorage.getPfp()} onClick={onClick} className='rounded-full border-indigo-600 w-10 h-10 mr-12 mt-2 border-[3px] top-[-10] cursor-pointer' />
+            <div className={`absolute transition-opacity duration-200 ${isActive ? "opacity-100" : "opacity-0"} z-10 float-right right-10 top-[-50px] ${visible ? "visible" : "invisible"} bg-white rounded-lg mx-auto mt-32 w-72 border-[1px] border-yellow-300 overflow-auto`}>
             {sections.map((section, i, arr) => {
                 return (
                     <>
@@ -47,6 +53,7 @@ export default function UserDropDownMenu({visible}: Prop) {
                     </>
                 )
             })}
+        </div>
         </div>
     );
 }

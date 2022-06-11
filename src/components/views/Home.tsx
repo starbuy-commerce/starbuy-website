@@ -17,7 +17,7 @@ const Home = (props: any) => {
     const { category } = useParams();
     const [items, setItems] = useState<any[]>([])
 
-    let path = category == undefined ? "items" : "item/category/" + category
+    let path = category === undefined ? "items" : "item/category/" + category
 
     useEffect(() => {
         fetch(proxy + 'https://tcc-web-api.herokuapp.com/' + path, {
@@ -29,7 +29,7 @@ const Home = (props: any) => {
         }).then(response => response.json())
             .then(json => setItems(json))
             .catch(err => console.log(err))
-    }, [])
+    })
 
     return (
         <>
@@ -43,7 +43,7 @@ const Home = (props: any) => {
                     <CategoryButton img={home} size="w-8 h-8" category="Casa" id={3} />
                 </div>
                 
-                <div className="md:hidden">
+                <div className="md:hidden md:invisible">
                     <CategoryDropdown/>
                 </div>
 

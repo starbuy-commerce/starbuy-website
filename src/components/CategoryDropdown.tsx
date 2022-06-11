@@ -25,7 +25,7 @@ const elements = [
   },
 ]
 
-export default function CategoryDropdown() {
+export default function  CategoryDropdown() {
   const ref = React.useRef(null);
   const [isActive, setActive] = useState(false);
   const onClick = () => setActive(!isActive);
