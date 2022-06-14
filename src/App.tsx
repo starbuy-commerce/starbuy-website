@@ -25,6 +25,7 @@ class App extends Component {
         <Routes>
   
           <Route path="/" element={<Home container={this.container}/>}></Route>
+          <Route path='/search/:query' element={<Home/>}></Route>
           <Route path="/category/:category" element={<Home/>} ></Route>
           <Route path="/login" element={<LoginForm/>}></Route>
           <Route path="/item/:id" element={<Item/>}></Route>

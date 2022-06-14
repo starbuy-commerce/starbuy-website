@@ -16,8 +16,11 @@ const Home = (props: any) => {
 
     const { category } = useParams();
     const [items, setItems] = useState<any[]>([])
+    const { query } = useParams();
 
-    let path = category === undefined ? "items" : "item/category/" + category
+    let path = category === undefined && query === undefined
+        ? "items" : category !== undefined ? "item/category/" + category
+        : query !== undefined ? "item/search/" + query.replaceAll("%20", " ") : "items";
 
     useEffect(() => {
         fetch(proxy + 'https://tcc-web-api.herokuapp.com/' + path, {
