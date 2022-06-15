@@ -23,7 +23,6 @@ class App extends Component {
       <div ref={this.container as React.RefObject<HTMLDivElement>}>
         <Router>
         <Routes>
-  
           <Route path="/" element={<Home container={this.container}/>}></Route>
           <Route path='/search/:query' element={<Home/>}></Route>
           <Route path="/category/:category" element={<Home/>} ></Route>

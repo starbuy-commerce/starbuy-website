@@ -9,6 +9,7 @@ import home from "../../images/category/home.svg"
 import guitarLogo from "../../images/category/guitar.svg"
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Review from "../Review";
 
 const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
