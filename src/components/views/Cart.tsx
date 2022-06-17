@@ -4,7 +4,7 @@
 // Acho q teria q pegar o User, contar quantos produtos tem e fazer um if com o CartCard pra aparecer todos, se algm tiver outra ideia deixa aq :)
 //- Vasco
 
-import CartCard from "../CartCard";
+import CartCard from "../card/CartCard";
 import Navbar from "../Navbar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";

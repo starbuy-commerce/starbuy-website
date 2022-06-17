@@ -1,5 +1,5 @@
-import CategoryButton from "../CategoryButton";
-import CategoryDropdown from "../CategoryDropdown";
+import CategoryButton from "../category/CategoryButton";
+import CategoryDropdown from "../category/CategoryDropdown";
 import Navbar from "../Navbar";
 import ProductCard from "../ProductCard";
 import tech from "../../images/category/tech.svg"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
-import UserStorage from "../model/UserStorage";
+import UserStorage from "../../model/UserStorage";
 
 type Prop = { visible: boolean };
 

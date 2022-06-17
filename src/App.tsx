@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie';
 import User from './components/views/User';
 import Cart from './components/views/Cart';
 import Orders from './components/views/Orders';
-import UserDropDownMenu from './components/UserDropDownMenu';
+import UserDropDownMenu from './components/dropdown/UserDropDownMenu';
 import Settings from './components/views/Settings';
 
 class App extends Component {
