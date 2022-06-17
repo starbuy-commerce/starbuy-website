@@ -5,6 +5,7 @@ import addToCart from '../../images/add-to-cart.svg';
 import buyNow from '../../images/buy-now.svg';
 import { useCookies } from "react-cookie";
 import Review from "../Review";
+import { json } from "stream/consumers";
 
 type Props = {
     img: string,
@@ -47,13 +48,17 @@ export default function Item() {
     }, [])
 
     function postCart() {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/cart/', {
+        console.log("postou")
+        fetch(proxy + 'https://tcc-web-api.herokuapp.com/cart', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'Access-Control-Allow-Origin': '*',
-                'Authorization:': "Bearer " + cookies.access_token
-            },
+                'Authorization': 'Bearer ' + cookies.access_token
+            }, body: JSON.stringify({
+                item: id,
+                quantity: 1
+            }),
         })
         .then(response => response.json())
         .then(json => {

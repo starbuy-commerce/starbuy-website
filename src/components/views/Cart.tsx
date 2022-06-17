@@ -28,7 +28,7 @@ const Cart = () => {
     return (
         <div>
             <Navbar bottomBar={true} fixed={false} />
-            <div className="flex">
+            <div className="">
                 <div className="font-inter text-[#4A4A4A]">
                     <h1 className="font-inter font-bold text-2xl ml-20 mt-12 mb-12">MEUS PEDIDOS</h1>
                     {cartItems === null || cartItems === undefined || cartItems.length == 0 
