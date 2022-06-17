@@ -8,7 +8,7 @@ export default function Review({reviewer, pfp, rating, description}: any) {
                 <div className="ml-4">
                     <div className="flex">
                         <p className="font-inter text-gray-800 font-medium text-[0.95rem]">{reviewer}</p>
-                        <div className="ml-4 mt-[0.15rem]">
+                        <div className="ml-4">
                             <Rating precision={0.5} name="read-only" value={rating/2} readOnly size="small"/>
                         </div>
                     </div>
