@@ -30,7 +30,7 @@ const Cart = () => {
             <Navbar bottomBar={true} fixed={false} />
             <div className="">
                 <div className="font-inter text-[#4A4A4A]">
-                    <h1 className="font-inter font-bold text-2xl ml-20 mt-12 mb-12">MEUS PEDIDOS</h1>
+                    <h1 className="font-inter font-bold text-2xl ml-20 mt-12 mb-12">MEU CARRINHO</h1>
                     {cartItems === null || cartItems === undefined || cartItems.length == 0 
                         ? 
                         <p className="text-lg font-inter font-medium ml-20">Você não tem nenhum item no seu carrinho</p> 

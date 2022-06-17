@@ -9,9 +9,8 @@ import home from "../../images/category/home.svg"
 import guitarLogo from "../../images/category/guitar.svg"
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { proxied_host } from "../../API"
 import Review from "../Review";
-
-const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
 const Home = (props: any) => {
 
@@ -24,7 +23,7 @@ const Home = (props: any) => {
         : query !== undefined ? "item/search/" + query.replaceAll("%20", " ") : "items";
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/' + path, {
+        fetch(proxied_host + path, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
+import { isatty } from "tty";
 import UserStorage from "../../model/UserStorage";
 
 type Prop = { visible: boolean };
@@ -36,16 +37,18 @@ export default function UserDropDownMenu({ visible }: Prop) {
 
     const [cookies, setCookie, removeCookie] = useCookies();
     const [isActive, setActive] = useState(false);
-    const onClick = () => setActive(!isActive);
+    function onClick() {
+        setActive(!isActive)
+    }
 
     return (
         <div className="flex flex-col">
             <img src={UserStorage.getPfp()} onClick={onClick} className='rounded-full border-indigo-600 w-10 h-10 mr-12 mt-2 border-[3px] top-[-10] cursor-pointer' />
-            <div className={`absolute transition-opacity duration-200 ${isActive ? "opacity-100" : "opacity-0"} z-10 float-right right-10 top-[-50px] ${visible ? "visible" : "invisible"} bg-white rounded-lg mx-auto mt-32 w-72 border-[1px] border-yellow-300 overflow-auto`}>
+            <div className={`absolute transition-opacity duration-200 ${isActive ? "opacity-100" : "opacity-0"} ${isActive ? "z-20" : "-z-10"} float-right right-10 top-[-50px] bg-white rounded-lg mx-auto mt-32 w-72 border-[1px] border-yellow-300 overflow-auto`}>
             {sections.map((section, i, arr) => {
                 return (
                     <>
-                        <div className="flex px-2 hover:cursor-pointer hover:bg-gray-100 text-yel text-gray-700 fill-gray-700" onClick={() => section.trigger()}>
+                        <div className={`flex px-2 hover:cursor-pointer hover:bg-gray-100 text-yel text-gray-700 fill-gray-700`} onClick={() => { if(isActive) section.trigger()}}>
                             <svg className={"my-auto w-6 h-6 ml-2"}><path d={section.svg}/></svg>
                             <p className="font-inter ml-6 font-bold my-3">{section.name}</p>
                         </div>

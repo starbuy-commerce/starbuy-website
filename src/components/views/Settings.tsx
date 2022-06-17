@@ -2,8 +2,7 @@ import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie";
 import UserStorage from "../../model/UserStorage";
 import Navbar from "../Navbar";
-
-const proxy = 'https://blooming-coast-08475.herokuapp.com/'
+import { proxied_host } from "../../API"
 
 export default function Settings() {
     const [name, setName] = useState("");
@@ -13,7 +12,7 @@ export default function Settings() {
     const [addresses, setAddresses] = useState("")
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/user/' + UserStorage.getUsername(), {
+        fetch(proxied_host + 'user/' + UserStorage.getUsername(), {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -30,7 +29,7 @@ export default function Settings() {
     }, [])
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/address', {
+        fetch(proxied_host + 'address', {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

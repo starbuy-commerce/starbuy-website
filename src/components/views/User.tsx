@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserStorage from "../../model/UserStorage";
 import Navbar from "../Navbar";
-
-const proxy = 'https://blooming-coast-08475.herokuapp.com/'
+import { proxied_host } from "../../API"
 
 export default function User() {
     
@@ -15,7 +14,7 @@ export default function User() {
     const path = username == undefined ? UserStorage.getUsername() : "/" + username;
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/user/' + path + "?includeItems=true", {
+        fetch(proxied_host + 'user/' + path + "?includeItems=true", {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

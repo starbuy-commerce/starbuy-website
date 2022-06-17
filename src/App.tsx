@@ -7,6 +7,7 @@ import User from './components/views/User';
 import Cart from './components/views/Cart';
 import Orders from './components/views/Orders';
 import Settings from './components/views/Settings';
+import { checkBackupHost } from "./API"
 
 class App extends Component {
   container;
@@ -14,6 +15,10 @@ class App extends Component {
   constructor(props: any) {
     super(props)
     this.container = React.createRef();
+  }
+
+  componentDidMount() {
+    checkBackupHost();
   }
 
   render() {

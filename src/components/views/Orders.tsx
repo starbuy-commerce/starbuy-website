@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Navbar from "../Navbar";
 import delivery from "../../images/delivery.svg"
+import { proxied_host } from "../../API"
 
 export default function Orders() {
 
@@ -10,7 +11,7 @@ export default function Orders() {
     const [orders, setOrders] = useState<any[]>([])
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/orders', {
+        fetch(proxied_host + 'orders', {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

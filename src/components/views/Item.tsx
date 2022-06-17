@@ -8,6 +8,7 @@ import Review from "../Review";
 import { json } from "stream/consumers";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { Snackbar } from "@mui/material";
+import { proxied_host } from "../../API"
 
 type Props = {
     img: string,
@@ -23,8 +24,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 ) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
-const proxy = 'https://blooming-coast-08475.herokuapp.com/'
 
 export default function Item() {
 
@@ -50,7 +49,7 @@ export default function Item() {
     };
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/item/' + id + "?reviews=true", {
+        fetch(proxied_host + id + "?reviews=true", {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -70,7 +69,7 @@ export default function Item() {
 
     function postCart() {
         setCartAdded(true);
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/cart', {
+        fetch(proxied_host + 'cart', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

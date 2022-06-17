@@ -2,8 +2,7 @@ import shopping from '../../images/shopping.jpg'
 import cookie, { useCookies } from "react-cookie";
 import { useEffect, useState } from 'react';
 import UserStorage from '../../model/UserStorage';
-
-const proxy = 'https://blooming-coast-08475.herokuapp.com/'
+import { proxied_host } from "../../API"
 
 export default function LoginForm() {
 
@@ -26,7 +25,7 @@ export default function LoginForm() {
             return
         }
 
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/login', {
+        fetch(proxied_host + 'login', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
