@@ -4,6 +4,7 @@ import Navbar from "../Navbar";
 import addToCart from '../../images/add-to-cart.svg';
 import buyNow from '../../images/buy-now.svg';
 import { useCookies } from "react-cookie";
+import Review from "../Review";
 
 type Props = {
     img: string,
@@ -23,6 +24,7 @@ export default function Item() {
     const [preco, setPreco] = useState<number>(0)
     const [description, setDesc] = useState<string>("")
     const [title, setTitle] = useState<string>("")
+    const [reviews, setReviews] = useState<any>([])
     const [cookies, setCookie] = useCookies();
     
     useEffect(() => {
@@ -39,6 +41,7 @@ export default function Item() {
             setImagem(json.item.assets[0]);
             setPreco(json.item.item.price);
             setDesc(json.item.item.description);
+            setReviews(json.reviews);
         })
         .catch(err => console.log(err))
     }, [])
@@ -54,18 +57,14 @@ export default function Item() {
         })
         .then(response => response.json())
         .then(json => {
-            console.log(json);
-            setTitle(json.item.item.title)
-            setImagem(json.item.assets[0]);
-            setPreco(json.item.item.price);
-            setDesc(json.item.item.description);
+            
         })
         .catch(err => console.log(err))
     }
 
     return ( 
         
-        <div>
+        <div className="mb-8">
             <Navbar fixed={true} bottomBar={true}/>
             <div className="mt-28 bg-yellow-100 p-5">
                 <div className="flex p-5 bg-white rounded-lg">
@@ -99,7 +98,21 @@ export default function Item() {
                     </div>
                 </div>
             </div>
-
+            <p className="font-inter font-bold text-gray-900 text-lg ml-16 mt-16 mb-6">Avaliações dos usuários:</p>
+            {(reviews === undefined || reviews.lenght === 0) 
+                ? <p className="text-gray-900 font-light text-md ml-16">Nenhuma avaliação até o momento.</p>
+                : reviews.map((review: any, i: number, reviews: []) => {
+                    return (
+                        <div className={`
+                            ${i == 0 ? "rounded-t-xl" : ""}
+                            ${i == reviews.length - 1 ? "rounded-b-xl" : ""}
+                            p-4 mx-16 border-2
+                            border-indigo-400
+                        `}>
+                            <Review reviewer={review.reviewer.name} pfp={review.reviewer.profile_picture} rating={review.rate} description={review.message}/>
+                        </div>
+                    );
+                })}
         </div>
     )
 }

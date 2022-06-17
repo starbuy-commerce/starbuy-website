@@ -1,18 +1,18 @@
-import Rating from "./Rating";
+import Rating from "@mui/material/Rating"
 
 export default function Review({reviewer, pfp, rating, description}: any) {
     return (
         <div className="">
             <div className="flex">
-                <img src={pfp} className="rounded-full w-14 h-14"/>
+                <img src={pfp} className="rounded-full w-12 h-12"/>
                 <div className="ml-4">
                     <div className="flex">
-                        <p className="font-inter text-gray-800 font-medium">{reviewer}</p>
-                        <div className="ml-4 mt-[0.20rem]">
-                            <Rating rate={rating}/>
+                        <p className="font-inter text-gray-800 font-medium text-[0.95rem]">{reviewer}</p>
+                        <div className="ml-4 mt-[0.15rem]">
+                            <Rating precision={0.5} name="read-only" value={rating/2} readOnly size="small"/>
                         </div>
                     </div>
-                    <p className="font-inter text-gray-900 text-sm mt-2 w-3/5 text-justify">{description}</p>
+                    <p className="font-inter text-gray-900 text-sm mt-2 w-full text-justify">{description}</p>
                 </div>
             </div>
         </div>
