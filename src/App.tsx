@@ -3,11 +3,9 @@ import Home from './components/views/Home';
 import LoginForm from './components/views/LoginForm';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Item from './components/views/Item';
-import { useCookies } from 'react-cookie';
 import User from './components/views/User';
 import Cart from './components/views/Cart';
 import Orders from './components/views/Orders';
-import UserDropDownMenu from './components/dropdown/UserDropDownMenu';
 import Settings from './components/views/Settings';
 
 class App extends Component {
@@ -32,6 +30,7 @@ class App extends Component {
           <Route path="/user/:username" element={<User/>}/>
           <Route path="/orders" element={<Orders/>}/>
           <Route path="/settings" element={<Settings/>}/>
+          <Route path="/cart" element={<Cart/>}/>
         </Routes>
       </Router>
       </div>

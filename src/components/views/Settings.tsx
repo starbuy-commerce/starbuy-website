@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie";
+import UserStorage from "../../model/UserStorage";
 import Navbar from "../Navbar";
 
 const proxy = 'https://blooming-coast-08475.herokuapp.com/'
@@ -12,7 +13,7 @@ export default function Settings() {
     const [addresses, setAddresses] = useState("")
 
     useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/user/vasco2004', {
+        fetch(proxy + 'https://tcc-web-api.herokuapp.com/user/' + UserStorage.getUsername(), {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
