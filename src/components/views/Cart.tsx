@@ -38,7 +38,7 @@ const Cart = () => {
                         <div className="overflow-y-auto">
                             {cartItems.map(cartItem => {
                                 return (
-                                    <CartCard item={cartItem.item as ItemWithAssets} quantity={cartItem.quantity}/>
+                                    <CartCard item={cartItem.item as ItemWithAssets} initial={cartItem.quantity}/>
                                 );
                         })}
                     </div>}

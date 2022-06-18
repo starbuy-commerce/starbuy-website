@@ -37,7 +37,7 @@ const Home = (props: any) => {
     return (
         <>
             <Navbar fixed={true} bottomBar={true} />
-            <div className="mt-32">
+            <div className="mt-32 mb-10">
                 <div className="md:flex gap-6 justify-center hidden">
                     <CategoryButton img={tech} size="w-10 h-10" category="Eletrônico" id={1} />
                     <CategoryButton img={clothes} size="w-10 h-10" category="Vestuário" id={2} />
@@ -51,7 +51,8 @@ const Home = (props: any) => {
                 </div>
 
                 <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center z-0">
-                    {items.map(json => {
+                    {items === null ? <p>Nenhum item encontrado</p>
+                    : items.map(json => {
                         const image: string = json.assets[0];
                         return (<ProductCard img={image} name={json.item.title} price={json.item.price.toFixed(2)} id={json.item.identifier} />)
                     })}

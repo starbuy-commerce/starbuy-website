@@ -49,7 +49,7 @@ export default function Item() {
     };
 
     useEffect(() => {
-        fetch(proxied_host + id + "?reviews=true", {
+        fetch(proxied_host + 'item/' + id + "?reviews=true", {
             method: 'GET', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

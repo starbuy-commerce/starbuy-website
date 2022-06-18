@@ -7,53 +7,63 @@ import QuantityController from "../QuantityController"
 
 interface Props {
     item: ItemWithAssets,
-    quantity: number
+    initial: number
 }
 
-export default class CartCard extends React.Component<Props, { quantity: number }> {
+export default function CartCard({ item, initial }: Props) {
 
-    ref: RefObject<QuantityController>
+    const [quantity, setQuantity] = useState(initial)
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            quantity: this.props.quantity
+    function less() {
+        if (quantity - 1 <= 0) {
+            return;
         }
-
-        this.ref = React.createRef();
+        setQuantity(quantity - 1);
     }
 
-    componentDidMount() {
-        this.setState({quantity: this.ref.current?.state.quantity!})
+    function increase() {
+        setQuantity(quantity + 1);
     }
 
-    render() {
-        return (
-            <div className="w-10/12 mx-auto mb-4 h-2/5 border-[1px] border-yellow-400 rounded-lg">
-                <div className="flex mb-6 mt-6 ">
-                    <img onClick={() => window.location.href = "/item/" + this.props.item.item.identifier} className="h-20 w-20 my-auto ml-8 hover:cursor-pointer" src={this.props.item.assets[0]} alt="" />
-                    <div className="text-md font-medium ml-10 text-md">
-                        <div className="flex">
-                            <p className="font-bold mr-8 mt-2 w-full max-w-full">{this.props.item.item.title}</p>
-                        </div>
-                        <p className="mt-4">Preço total: R$ {this.props.item.item.price * this.state.quantity}</p>
-                        <p>Quantidade: {this.ref.current?.state.quantity} unidade(s)</p>
+    return (
+        <div className="w-10/12 mx-auto mb-4 h-2/5 border-[1px] border-yellow-400 rounded-lg">
+            <div className="flex mb-6 mt-6 ">
+                <img onClick={() => window.location.href = "/item/" + item.item.identifier} className="h-20 w-20 my-auto ml-8 hover:cursor-pointer" src={item.assets[0]} alt="" />
+                <div className="text-md font-medium ml-10 text-md">
+                    <div className="flex">
+                        <p className="font-bold mr-8 mt-2 w-full max-w-full">{item.item.title}</p>
                     </div>
-                    <div className="flex flex-col justify-between ml-auto mr-8">
-                        <div className="mx-auto">
-                            <QuantityController initial={this.props.quantity} ref={this.ref} />
+                    <p className="mt-4">Preço total: R$ {item.item.price * quantity}</p>
+                    <p>Quantidade: {quantity} unidade(s)</p>
+                </div>
+                <div className="flex flex-col justify-between ml-auto mr-8">
+                    <div className="mx-auto">
+                        <div className="flex">
+                            <div onClick={less} className="hover:cursor-pointer hover:bg-slate-200 flex justify-center w-8 h-8 border-t-[1px] border-l-[1px] border-b-[1px] border-gray-700 rounded-tl-md rounded-bl-md">
+                                <div className="my-auto">
+                                    <svg className="fill-slate-500" width="12" height="12" viewBox="0 0 24 24"><path d="M0 10h24v4h-24z" /></svg>
+                                </div>
+                            </div>
+                            <div className="flex justify-center w-8 h-8 border-[1px] border-gray-700">
+                                <p className="my-auto">{quantity}</p>
+                            </div>
+                            <div onClick={increase} className="hover:cursor-pointer hover:bg-slate-200 flex justify-center w-8 h-8 border-t-[1px] border-r-[1px] border-b-[1px] border-gray-700 rounded-tr-md rounded-br-md">
+                                <div className="my-auto">
+                                    <svg className="fill-slate-500" width="12" height="12" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" /></svg>
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex gap-4">
-                            <Button variant="contained" color="success" className="h-8" >
-                                FINALIZAR
-                            </Button>
-                            <Button variant="contained" color="error" className="h-8" >
-                                REMOVER
-                            </Button>
-                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <Button variant="contained" color="success" className="h-8" >
+                            FINALIZAR
+                        </Button>
+                        <Button variant="contained" color="error" className="h-8" >
+                            REMOVER
+                        </Button>
                     </div>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
