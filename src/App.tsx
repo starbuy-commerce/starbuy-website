@@ -17,10 +17,6 @@ class App extends Component {
     this.container = React.createRef();
   }
 
-  componentDidMount() {
-    checkBackupHost();
-  }
-
   render() {
     return (
       <div ref={this.container as React.RefObject<HTMLDivElement>}>
