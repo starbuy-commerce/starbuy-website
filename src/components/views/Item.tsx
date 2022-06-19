@@ -197,8 +197,8 @@ export default function Item() {
                             : reviews.map((review: any, i: number, reviews: any[]) => {
                                 return (
                                     <div className={`
-                            ${i == 0 ? "md:rounded-t-xl" : ""}
-                            ${i == reviews.length - 1 ? "md:rounded-b-xl" : ""}
+                            ${i == 0 ? "md:rounded-t-xl" : "md:border-t-0"}
+                            ${i == reviews.length - 1 ? "md:rounded-b-xl" : "md:border-b-0"}
                             p-4 md:mx-16 md:border-[1px]
                             border-indigo-400
                         `}>
