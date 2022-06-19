@@ -1,8 +1,11 @@
 import { Button } from "@mui/material";
 import { setUncaughtExceptionCaptureCallback } from "process";
 import React, { createRef, RefObject, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
+import { delete_cart } from "../../api/cart";
 import Item from "../../model/Item";
 import ItemWithAssets from "../../model/ItemWithAssets";
+import { Response } from "../../model/Response";
 import QuantityController from "../QuantityController"
 
 interface Props {
@@ -13,6 +16,7 @@ interface Props {
 export default function CartCard({ item, initial }: Props) {
 
     const [quantity, setQuantity] = useState(initial)
+    const [cookies] = useCookies();
 
     function less() {
         if (quantity - 1 <= 0) {
@@ -23,6 +27,10 @@ export default function CartCard({ item, initial }: Props) {
 
     function increase() {
         setQuantity(quantity + 1);
+    }
+
+    function removeFromCart() {
+        delete_cart(item.item.identifier, cookies.access_token, (resp: Response) => {})
     }
 
     return (
@@ -58,7 +66,7 @@ export default function CartCard({ item, initial }: Props) {
                         <Button onClick={() => window.location.href = "/checkout?item=" + item.item.identifier + "&quantity=" + quantity} variant="contained" color="success" className="h-8" >
                             FINALIZAR
                         </Button>
-                        <Button variant="contained" color="error" className="h-8" >
+                        <Button onClick={() => { removeFromCart(); window.location.href = "/cart"}} variant="contained" color="error" className="h-8" >
                             REMOVER
                         </Button>
                     </div>

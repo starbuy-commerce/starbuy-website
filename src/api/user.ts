@@ -1,11 +1,11 @@
 import User from "../model/User";
 import { default_headers, proxied_host } from "./spec";
 
-interface Login { username: string, password: string}
+export interface Login { username: string, password: string}
 export interface AuthResponse { status: boolean, message: string, user: User, jwt: string } 
 export function login(info: Login, callback: (resp: AuthResponse) => void) {
     fetch(proxied_host + "login", {
-        method: 'POST', headers: default_headers, body: JSON.stringify(login)
+        method: 'POST', headers: default_headers, body: JSON.stringify(info)
     }).then(resp => resp.json()).then(json => callback(json as AuthResponse))
 }
 

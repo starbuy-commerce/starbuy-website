@@ -66,6 +66,7 @@ export default function Item() {
             setImagem(item.item.assets[0]);
             setPreco(item.item.item.price);
             setDesc(item.item.item.description);
+            setRating(item.average);
             if(item.reviews !== undefined && item.reviews !== null) {
                 setReviews(item.reviews);
             }
@@ -130,7 +131,12 @@ export default function Item() {
                             </div>
                             <div className="flex">
                                 <div className="w-1/2">
-                                    <p className="text-sm font-inter font-semibold mt-2 ml-2 mr-2 text-gray-800">Estimativa de entrega: Seila</p>
+                                    <div className="flex">
+                                        <p className="text-sm font-inter font-semibold my-auto ml-2 mr-2 text-gray-800">Avaliação: </p>
+                                        <div className="">
+                                            <Rating className="mt-1" precision={0.5} name="read-only" value={rating/2} readOnly size="small"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
