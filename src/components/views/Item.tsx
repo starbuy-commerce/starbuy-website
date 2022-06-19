@@ -141,11 +141,11 @@ export default function Item() {
                             </div>
                             <div className="flex">
                                 <div className="w-1/2">
-                                    <div className="flex">
-                                        <p className="text-sm font-inter font-semibold my-auto ml-2 mr-2 text-gray-800">Avaliação: </p>
-                                        <div className="">
+                                    <div className="flex text-sm font-inter font-semibold my-auto ml-2 mr-2 text-gray-700">
+                                        <p className="mt-1 mr-2">Avaliação: </p>
+                                        { rating == -1 ? <p className="w-full"> Nenhuma avaliação</p> :
                                             <Rating className="mt-1" precision={0.5} name="read-only" value={rating/2} readOnly size="small"/>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
