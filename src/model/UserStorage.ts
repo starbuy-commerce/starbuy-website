@@ -1,6 +1,32 @@
 import { useCookies } from "react-cookie";
+import User from "./User";
 
 const UserStorage = (function() {
+
+    function getUser(): User {
+        return {
+            birthdate: getBirthdate(),
+            city: getCity(),
+            email: getEmail(),
+            name: getName(),
+            profile_picture: getPfp(),
+            registration: getRegistration(),
+            seller: isSeller(),
+            username: getUsername(),
+        }
+    }
+
+    function isSeller(): boolean {
+        return localStorage.getItem("isSeller") == "true" ? true : false;
+    }
+
+    function setSeller(seller: boolean) {
+        localStorage.setItem("seller", seller + "");
+    }
+
+    function getRegistration(): string {
+        return localStorage.getItem("registration") + "";
+    }
 
     function getName(): string {
         return localStorage.getItem("name") + "";
@@ -20,6 +46,10 @@ const UserStorage = (function() {
 
     function getCity(): string {
         return localStorage.getItem("city") + "";
+    }
+
+    function getBirthdate(): string {
+        return localStorage.getItem("birthdate") + ""; 
     }
 
     function setName(name: string) {
@@ -42,25 +72,40 @@ const UserStorage = (function() {
         localStorage.setItem("username", username);
     }
 
+    function setBirthdate(birthdate: string) {
+        localStorage.setItem("birthdate", birthdate);
+    }
+
+    function setRegistration(registration: string) {
+        localStorage.setItem("registration", registration);
+    }
+
     function clear() {
         localStorage.removeItem("name");
         localStorage.removeItem("email");
         localStorage.removeItem("profile_picture");
         localStorage.removeItem("city");
         localStorage.removeItem("username");
+        localStorage.removeItem("birthdate");
+        localStorage.removeItem("registration");
     }
 
     return {
+        getRegistration: getRegistration,
+        setRegistration: setRegistration,
         getName: getName,
         setName: setName,
         getUsername: getUsername,
         setUsername: setUsername,
         getEmail: getEmail,
         setEmail: setEmail,
+        getBirthdate: getBirthdate,
         getPfp: getPfp,
         setPfp: setPfp,
         getCity: getCity,
         setCity: setCity,
+        setBirthdate: setBirthdate,
+        getUser: getUser,
       }
 })();
 

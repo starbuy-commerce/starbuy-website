@@ -10,6 +10,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { Rating, Snackbar } from "@mui/material";
 import { proxied_host } from "../../API"
 import User from "../../model/User";
+import UserStorage from "../../model/UserStorage";
 
 type Props = {
     img: string,
@@ -35,10 +36,10 @@ export default function Item() {
     const [preco, setPreco] = useState<number>(0)
     const [description, setDesc] = useState<string>("")
     const [title, setTitle] = useState<string>("")
-    const [reviews, setReviews] = useState<any>([])
+    const [reviews, setReviews] = useState<any[]>([])
     const [rateSum, setRateSum] = useState(0);
     const [cookies, setCookie] = useCookies();
-    const [review, setReview] = useState();
+    const [review, setReview] = useState("");
     const [rating, setRating] = useState(0);
 
     const [successSnack, setSuccessSnack] = useState(false);
@@ -68,10 +69,12 @@ export default function Item() {
                 setImagem(json.item.assets[0]);
                 setPreco(json.item.item.price);
                 setDesc(json.item.item.description);
-                setReviews(json.reviews);
+                if(json.reviews !== undefined && json.reviews !== null) {
+                    setReviews(json.reviews);
+                }
                 setSeller(json.item.item.seller);
 
-                if (reviews.lenght != 0) {
+                if (reviews.length != 0) {
                     reviews.map((review: any) => {
                         setRateSum(rateSum + review.rate)
                     })
@@ -102,17 +105,19 @@ export default function Item() {
     }
 
     function postReview() {
+        let body = JSON.stringify({
+            rate: rating * 2,
+            message: review,
+            item: id
+        })
+        console.log(body)
         fetch(proxied_host + 'review', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': 'Bearer ' + cookies.access_token
-            }, body: JSON.stringify({
-                rate: rating,
-                message: review,
-                item: id
-            }),
+            }, body: body,
         })
         .then(response => response.json())
         .then(json => {
@@ -120,15 +125,17 @@ export default function Item() {
                 setErrorSnack(true);
                 setErrorMessage(json.message);
             } else {
-                reviews.push(
+                setReviews(reviews.concat(
                     {
-                        reviewer: seller,
+                        reviewer: UserStorage.getUser(),
                         message: review,
-                        rate: rating
+                        rate: rating*2
                     }
-                )
+                ));
                 setSuccessSnack(true);
                 setSuccessMessage("Obrigado por sua avaliação!");
+                setReview("");
+                setRating(0);
             }
         
         })
@@ -193,9 +200,9 @@ export default function Item() {
                 <div className="flex justify-center">
                     <div className="p-5 md:w-[86.5%] bg-white rounded-xl">
                         <p className="font-inter font-bold text-gray-900 text-lg md:ml-16 mt-16 mb-6">Avaliações dos usuários:</p>
-                        {(reviews === undefined || reviews.lenght === 0)
+                        {(reviews === undefined || reviews.length === 0)
                             ? <p className="text-gray-900 font-light text-md ml-16">Nenhuma avaliação até o momento.</p>
-                            : reviews.map((review: any, i: number, reviews: []) => {
+                            : reviews.map((review: any, i: number, reviews: any[]) => {
                                 return (
                                     <div className={`
                             ${i == 0 ? "md:rounded-t-xl" : ""}
