@@ -183,7 +183,7 @@ export default function Item() {
                     </div>
                 </div>
                 <div className="bg-white h-full md:w-1/4 border-[1px] p-4 border-purple-600 mt-4 md:mt-0 md:ml-5 rounded-xl">
-                    <p className="mb-4 font-inter text-sm font-light">Vendedor:</p>
+                    <p className="mb-4 font-inter text-sm font-light">Vendedor(a):</p>
                     <div className="ml-4">
                         <div className="flex">
                             <img onClick={() => window.location.href = "/user/" + seller?.username} src={seller?.profile_picture} className="hover:cursor-pointer h-11 w-11 border-purple-600 border-2 rounded-full" />
@@ -199,7 +199,7 @@ export default function Item() {
             <div className="p-5 pt-0 bg-gray-100">
                 <div className="flex justify-center">
                     <div className="p-5 md:w-[86.5%] bg-white rounded-xl">
-                        <p className="font-inter font-bold text-gray-900 text-lg md:ml-16 mt-16 mb-6">Avaliações dos usuários:</p>
+                        <p className="font-inter font-bold text-gray-900 text-lg md:ml-16 mt-6 mb-6">Avaliações dos usuários:</p>
                         {(reviews === undefined || reviews.length === 0)
                             ? <p className="text-gray-900 font-light text-md ml-16">Nenhuma avaliação até o momento.</p>
                             : reviews.map((review: any, i: number, reviews: any[]) => {
