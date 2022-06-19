@@ -8,6 +8,7 @@ import Cart from './components/views/Cart';
 import Orders from './components/views/Orders';
 import Settings from './components/views/Settings';
 import { checkBackupHost } from "./API"
+import OrderCheckout from './components/views/OrderCheckout';
 
 class App extends Component {
   container;
@@ -32,6 +33,7 @@ class App extends Component {
           <Route path="/orders" element={<Orders/>}/>
           <Route path="/settings" element={<Settings/>}/>
           <Route path="/cart" element={<Cart/>}/>
+          <Route path="/checkout" element={<OrderCheckout/>}/>
         </Routes>
       </Router>
       </div>
