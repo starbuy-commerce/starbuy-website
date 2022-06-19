@@ -2,28 +2,15 @@
 import Navbar from "../Navbar";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import ItemWithAssets from "../../model/ItemWithAssets";
 import CartCard from "../card/CartCard";
-
-const proxy = 'https://blooming-coast-08475.herokuapp.com/'
+import { get_cart } from "../../api/cart";
+import CartItem from "../../model/CartItem";
 
 const Cart = () => {
-    const [cookies, setCookie] = useCookies();
-    const [cartItems, setCartItems] = useState<any[]>([])
+    const [cookies] = useCookies();
+    const [cartItems, setCartItems] = useState<CartItem[]>([])
 
-    useEffect(() => {
-        fetch(proxy + 'https://tcc-web-api.herokuapp.com/cart', {
-            method: 'GET', headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': "Bearer " + cookies.access_token
-            },
-        })
-            .then(response => response.json())
-            .then(json => setCartItems(json))
-            .catch(err => console.log(err))
-    }, [])
+    useEffect(() => get_cart(cookies.access_token, (resp: CartItem[]) => setCartItems(resp)), [])
 
     return (
         <div>
@@ -38,7 +25,7 @@ const Cart = () => {
                         <div className="overflow-y-auto">
                             {cartItems.map(cartItem => {
                                 return (
-                                    <CartCard item={cartItem.item as ItemWithAssets} initial={cartItem.quantity}/>
+                                    <CartCard item={cartItem.item} initial={cartItem.quantity}/>
                                 );
                         })}
                     </div>}

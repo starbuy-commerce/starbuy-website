@@ -15,7 +15,7 @@ export default function ProductCard({ img, name, price, id }: Props) {
                 <img src={img} className="p-4 w-40 h-40 md:h-52 md:w-52 rounded-t-md" />
                 <div className="w-40 h-28 md:w-52 md:h-24">
                     <p className="text-sm break-words font-inter font-light mt-2 ml-2 mr-2 text-gray-800">{formated}</p>
-                    <p className="font-inter font-bold text-violet-900 static mt-4 ml-2">R$ {price}</p>
+                    <p className="font-inter font-bold text-violet-900 static mt-4 ml-2">R$ {price.toFixed(2)}</p>
                 </div>
             </div>
         </>

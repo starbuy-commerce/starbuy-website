@@ -8,9 +8,14 @@ import Review from "../Review";
 import { json } from "stream/consumers";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { Rating, Snackbar } from "@mui/material";
-import { proxied_host } from "../../API"
+import { proxied_host } from "../../api/spec"
 import User from "../../model/User";
 import UserStorage from "../../model/UserStorage";
+import { get_item_with_reviews, ItemWithReviews } from "../../api/item";
+import ItemWithAssets from "../../model/ItemWithAssets";
+import { post_cart } from "../../api/cart";
+import { Response } from "../../model/Response";
+import { post_review } from "../../api/review";
 
 type Props = {
     img: string,
@@ -56,74 +61,41 @@ export default function Item() {
     };
 
     useEffect(() => {
-        fetch(proxied_host + 'item/' + id + "?reviews=true", {
-            method: 'GET', headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Access-Control-Allow-Origin': '*'
-            },
-        })
-            .then(response => response.json())
-            .then(json => {
-                setTitle(json.item.item.title)
-                setImagem(json.item.assets[0]);
-                setPreco(json.item.item.price);
-                setDesc(json.item.item.description);
-                if(json.reviews !== undefined && json.reviews !== null) {
-                    setReviews(json.reviews);
-                }
-                setSeller(json.item.item.seller);
+        get_item_with_reviews(id!, (item: ItemWithReviews) => {
+            setTitle(item.item.item.title)
+            setImagem(item.item.assets[0]);
+            setPreco(item.item.item.price);
+            setDesc(item.item.item.description);
+            if(item.reviews !== undefined && item.reviews !== null) {
+                setReviews(item.reviews);
+            }
+            setSeller(item.item.item.seller);
 
-                if (reviews.length != 0) {
-                    reviews.map((review: any) => {
-                        setRateSum(rateSum + review.rate)
-                    })
-                }
-            })
-            .catch(err => console.log(err))
+            if (reviews.length != 0) {
+                reviews.map((review: any) => {
+                    setRateSum(rateSum + review.rate)
+                })
+            }
+        })
     }, [])
 
     function postCart() {
-        setSuccessSnack(true);
-        setSuccessMessage("Item adicionado ao carrinho");
-        fetch(proxied_host + 'cart', {
-            method: 'POST', headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + cookies.access_token
-            }, body: JSON.stringify({
-                item: id,
-                quantity: 1
-            }),
+        post_cart(id!, 1, cookies.access_token, (resp: Response) => {
+            if(!resp.status) {
+                setErrorSnack(true);
+                setErrorMessage(resp.message);
+                return 
+            }
+            setSuccessSnack(true);
+            setSuccessMessage(resp.message);
         })
-            .then(response => response.json())
-            .then(json => {
-
-            })
-            .catch(err => console.log(err))
     }
 
     function postReview() {
-        let body = JSON.stringify({
-            rate: rating * 2,
-            message: review,
-            item: id
-        })
-        console.log(body)
-        fetch(proxied_host + 'review', {
-            method: 'POST', headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + cookies.access_token
-            }, body: body,
-        })
-        .then(response => response.json())
-        .then(json => {
-            if(json.hasOwnProperty("status") && json.status === false) {
+        post_review({item: id!, rate: rating*2, message: review}, cookies.access_token, (resp: Response) => {
+            if(!resp.status) {
                 setErrorSnack(true);
-                setErrorMessage(json.message);
+                setErrorMessage(resp.message);
             } else {
                 setReviews(reviews.concat(
                     {
@@ -133,13 +105,11 @@ export default function Item() {
                     }
                 ));
                 setSuccessSnack(true);
-                setSuccessMessage("Obrigado por sua avaliação!");
+                setSuccessMessage(resp.message);
                 setReview("");
                 setRating(0);
             }
-        
         })
-        .catch(err => console.log(err))
     }
 
     return (
@@ -147,7 +117,7 @@ export default function Item() {
         <div className="mb-8">
             <Navbar fixed={true} bottomBar={true} />
             <div className="mt-24 bg-gray-100 p-5 md:flex justify-center">
-                <div className="md:w-3/5 md:flex p-5 rounded-xl bg-white">
+                <div className="md:w-3/5 md:flex p-5 rounded-xl bg-white border-[1px] border-gray-300">
                     <div className="md:w-3/6 rounded-lg mr-12">
                         <img src={imagem} className="h-64 w-64 mb-4 md:mb-0 md:h-96 md:w-96 p-4" />
                     </div>
@@ -173,7 +143,7 @@ export default function Item() {
                                     <span className="ml-2">Adicionar ao carrinho</span>
                                 </div>
                             </div>
-                            <div className="text-sm font-inter font-semibold bg-transparent text-indigo-500 py-2 px-3 border border-indigo-500 rounded hover:cursor-pointer">
+                            <div onClick={() => window.location.href = "/checkout?item=" + id + "&quantity=1"} className="text-sm font-inter font-semibold bg-transparent text-indigo-500 py-2 px-3 border border-indigo-500 rounded hover:cursor-pointer">
                                 <div className="flex">
                                     <img src={buyNow} alt="" />
                                     <span className="ml-2">Comprar agora</span>
@@ -182,26 +152,31 @@ export default function Item() {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white h-full md:w-1/4 border-[1px] p-4 border-purple-600 mt-4 md:mt-0 md:ml-5 rounded-xl">
-                    <p className="mb-4 font-inter text-sm font-light">Vendedor(a):</p>
-                    <div className="ml-4">
-                        <div className="flex">
-                            <img onClick={() => window.location.href = "/user/" + seller?.username} src={seller?.profile_picture} className="hover:cursor-pointer h-11 w-11 border-purple-600 border-2 rounded-full" />
-                            <div>
-                                <p className="font-inter text-md font-normal ml-4">{seller?.name}</p>
-                                <p className="font-inter text-xs font-normal ml-4 text-gray-500 mt-1">{seller?.city}</p>
+                <div className="md:w-1/4">
+                    <div className="bg-white w-full border-[1px] p-4 border-purple-600 mt-4 md:mt-0 md:ml-5 rounded-xl">
+                        <p className="mb-4 font-inter text-sm font-light">Vendedor(a):</p>
+                        <div className="ml-4">
+                            <div className="flex">
+                                <img onClick={() => window.location.href = "/user/" + seller?.username} src={seller?.profile_picture} className="hover:cursor-pointer h-11 w-11 border-purple-600 border-2 rounded-full" />
+                                <div>
+                                    <p className="font-inter text-md font-normal ml-4">{seller?.name}</p>
+                                    <p className="font-inter text-xs font-normal ml-4 text-gray-500 mt-1">{seller?.city}</p>
+                                </div>
                             </div>
+                            <p className="font-inter text-md text-gray-700 font-bold mt-8">Avaliação geral:</p>
                         </div>
-                        <p className="font-inter text-md text-gray-700 font-bold mt-8">Avaliação geral:</p>
                     </div>
                 </div>
             </div>
             <div className="p-5 pt-0 bg-gray-100">
                 <div className="flex justify-center">
-                    <div className="p-5 md:w-[86.5%] bg-white rounded-xl">
-                        <p className="font-inter font-bold text-gray-900 text-lg md:ml-16 mt-6 mb-6">Avaliações dos usuários:</p>
+                    <div className="p-5 w-full md:w-[86.5%] bg-white rounded-xl border-[1px] border-gray-300">
+                        <div className="flex md:ml-14">
+                            <svg className="w-6 h-6 fill-yellow-400 my-auto" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z" fill-rule="nonzero"/></svg>
+                            <p className="font-inter font-bold text-gray-900 text-lg ml-4 mt-6 mb-6">Avaliações dos usuários:</p>
+                        </div>
                         {(reviews === undefined || reviews.length === 0)
-                            ? <p className="text-gray-900 font-light text-md ml-16">Nenhuma avaliação até o momento.</p>
+                            ? <p className="text-gray-900 font-light text-md md:ml-16 md:text-left text-center">Nenhuma avaliação até o momento.</p>
                             : reviews.map((review: any, i: number, reviews: any[]) => {
                                 return (
                                     <div className={`
@@ -210,7 +185,7 @@ export default function Item() {
                             p-4 md:mx-16 md:border-[1px]
                             border-indigo-400
                         `}>
-                                        <Review reviewer={review.reviewer.name} pfp={review.reviewer.profile_picture} rating={review.rate} description={review.message} />
+                                        <Review reviewer={review.user.name} pfp={review.user.profile_picture} rating={review.rate} description={review.message} />
                                     </div>
                                 );
                             })}

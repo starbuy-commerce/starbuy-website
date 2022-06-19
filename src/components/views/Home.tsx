@@ -9,29 +9,34 @@ import home from "../../images/category/home.svg"
 import guitarLogo from "../../images/category/guitar.svg"
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { proxied_host } from "../../API"
 import Review from "../Review";
+import { proxied_host } from "../../api/spec";
+import { get_items, query_category, query_items } from "../../api/item";
+import { Response } from "../../model/Response";
+import ItemWithAssets from "../../model/ItemWithAssets";
 
-const Home = (props: any) => {
+const Home = () => {
 
     const { category } = useParams();
-    const [items, setItems] = useState<any[]>([])
+    const [items, setItems] = useState<ItemWithAssets[]>([])
     const { query } = useParams();
 
-    let path = category === undefined && query === undefined
-        ? "items" : category !== undefined ? "item/category/" + category
-        : query !== undefined ? "item/search/" + query.replaceAll("%20", " ") : "items";
-
     useEffect(() => {
-        fetch(proxied_host + path, {
-            method: 'GET', headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Access-Control-Allow-Origin': '*'
-            },
-        }).then(response => response.json())
-            .then(json => setItems(json))
-            .catch(err => console.log(err))
+        if(category === undefined && query === undefined) {
+            get_items((resp: ItemWithAssets[]) => setItems(resp))
+            return
+        }
+
+        if(category !== undefined) {
+            query_category(parseInt(category), (resp: ItemWithAssets[]) => setItems(resp))
+            return
+        }
+
+        if(query !== undefined) {
+            query_items(query, (resp: ItemWithAssets[]) => setItems(resp))
+            return
+        }
+        
     })
 
     return (
@@ -52,9 +57,9 @@ const Home = (props: any) => {
 
                 <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center z-0">
                     {items === null ? <p>Nenhum item encontrado</p>
-                    : items.map(json => {
-                        const image: string = json.assets[0];
-                        return (<ProductCard img={image} name={json.item.title} price={json.item.price.toFixed(2)} id={json.item.identifier} />)
+                    : items.map(item => {
+                        const image: string = item.assets[0];
+                        return (<ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />)
                     })}
                 </div>
             </div>

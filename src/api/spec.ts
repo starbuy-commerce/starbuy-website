@@ -17,3 +17,18 @@ export function checkBackupHost() {
         }
     })
 }
+
+export const default_headers = {
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Access-Control-Allow-Origin': '*'
+}
+
+export const authorized_headers = (token: string) => {
+    return {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': 'Bearer ' + token
+    }
+}

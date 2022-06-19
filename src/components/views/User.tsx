@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserStorage from "../../model/UserStorage";
 import Navbar from "../Navbar";
-import { proxied_host } from "../../API"
+import { proxied_host } from "../../api/spec"
 
 export default function User() {
     

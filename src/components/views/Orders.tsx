@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Navbar from "../Navbar";
 import delivery from "../../images/delivery.svg"
-import { proxied_host } from "../../API"
+import { proxied_host } from "../../api/spec"
+import { get_orders } from "../../api/order";
+import Order from "../../model/Order";
 
 export default function Orders() {
 
@@ -10,22 +12,7 @@ export default function Orders() {
     const [cookies, setCookie] = useCookies();
     const [orders, setOrders] = useState<any[]>([])
 
-    useEffect(() => {
-        fetch(proxied_host + 'orders', {
-            method: 'GET', headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': "Bearer " + cookies.access_token
-            },
-        })
-            .then(response => response.json())
-            .then(json => {
-                setOrders(json)
-                console.log(orders)
-            })
-            .catch(err => console.log(err))
-    }, [])
+    useEffect(() => get_orders(cookies.access_token, (resp: Order[]) => setOrders(resp)), [])
 
     return (
         <div>

@@ -2,7 +2,8 @@ import shopping from '../../images/shopping.jpg'
 import cookie, { useCookies } from "react-cookie";
 import { useEffect, useState } from 'react';
 import UserStorage from '../../model/UserStorage';
-import { proxied_host } from "../../API"
+import { proxied_host } from "../../api/spec"
+import { AuthResponse, login } from '../../api/user';
 
 export default function LoginForm() {
 
@@ -25,31 +26,22 @@ export default function LoginForm() {
             return
         }
 
-        fetch(proxied_host + 'login', {
-            method: 'POST', headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify({ username: username, password: password })
-        }).then(response => response.json())
-            .then(json => {
-                if (json.hasOwnProperty('error')) {
-                    setError(json.error);
-                    setPassword("");
-                    setUsername("");
-                } else {
-                    setCookie('access_token', json.jwt, { path: '/' });
-                    UserStorage.setEmail(json.user.email);
-                    UserStorage.setUsername(json.user.username);
-                    UserStorage.setName(json.user.name);
-                    UserStorage.setCity(json.user.city);
-                    UserStorage.setPfp(json.user.profile_picture);
-                    window.location.href = "/"
-                    setError("");
-                }
-            })
-            .catch(err => console.log(err))
+        login({password: password, username: username}, (resp: AuthResponse) => {
+            if (!resp.status) {
+                setError(resp.message);
+                setPassword("");
+                setUsername("");
+            } else {
+                setCookie('access_token', resp.jwt, { path: '/' });
+                UserStorage.setEmail(resp.user.email);
+                UserStorage.setUsername(resp.user.username);
+                UserStorage.setName(resp.user.name);
+                UserStorage.setCity(resp.user.city);
+                UserStorage.setPfp(resp.user.profile_picture);
+                window.location.href = "/"
+                setError("");
+            }
+        })
     }
 
     return (

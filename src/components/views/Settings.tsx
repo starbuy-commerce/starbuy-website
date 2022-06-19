@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie";
 import UserStorage from "../../model/UserStorage";
 import Navbar from "../Navbar";
-import { proxied_host } from "../../API"
+import { proxied_host } from "../../api/spec"
 
 export default function Settings() {
     const [name, setName] = useState("");

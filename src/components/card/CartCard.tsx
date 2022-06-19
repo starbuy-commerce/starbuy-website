@@ -55,7 +55,7 @@ export default function CartCard({ item, initial }: Props) {
                         </div>
                     </div>
                     <div className="flex gap-4">
-                        <Button variant="contained" color="success" className="h-8" >
+                        <Button onClick={() => window.location.href = "/checkout?item=" + item.item.identifier + "&quantity=" + quantity} variant="contained" color="success" className="h-8" >
                             FINALIZAR
                         </Button>
                         <Button variant="contained" color="error" className="h-8" >

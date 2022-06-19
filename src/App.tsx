@@ -7,7 +7,7 @@ import User from './components/views/User';
 import Cart from './components/views/Cart';
 import Orders from './components/views/Orders';
 import Settings from './components/views/Settings';
-import { checkBackupHost } from "./API"
+import { checkBackupHost } from "./api/spec"
 import OrderCheckout from './components/views/OrderCheckout';
 
 class App extends Component {
@@ -23,7 +23,7 @@ class App extends Component {
       <div ref={this.container as React.RefObject<HTMLDivElement>}>
         <Router>
         <Routes>
-          <Route path="/" element={<Home container={this.container}/>}></Route>
+          <Route path="/" element={<Home/>}></Route>
           <Route path='/search/:query' element={<Home/>}></Route>
           <Route path="/category/:category" element={<Home/>} ></Route>
           <Route path="/login" element={<LoginForm/>}></Route>
