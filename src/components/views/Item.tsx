@@ -117,9 +117,18 @@ export default function Item() {
         .then(response => response.json())
         .then(json => {
             if(json.hasOwnProperty("status") && json.status === false) {
-                console.log(json.message)
                 setErrorSnack(true);
                 setErrorMessage(json.message);
+            } else {
+                reviews.push(
+                    {
+                        reviewer: seller,
+                        message: review,
+                        rate: rating
+                    }
+                )
+                setSuccessSnack(true);
+                setSuccessMessage("Obrigado por sua avaliação!");
             }
         
         })
