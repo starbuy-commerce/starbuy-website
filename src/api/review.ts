@@ -2,7 +2,7 @@ import { Response } from "../model/Response";
 import Review from "../model/Review";
 import { authorized_headers, default_headers, proxied_host } from "./spec";
 
-interface ReviewsWithAverage {reviews: Review[], average: number}
+export interface ReviewsWithAverage {reviews: Review[], average: number}
 
 export function get_review(product: string, user: string, callback: (resp: Review) => void) {
     fetch(proxied_host + "review?user" + user + "&product=" + product, 
@@ -22,9 +22,9 @@ export function get_user_reviews(token: string, callback: (resp: ReviewsWithAver
     ).then(resp => resp.json()).then(json => callback(json as ReviewsWithAverage))
 }
 
-export function get_user_received_reviews(token: string, callback: (resp: ReviewsWithAverage) => void) {
-    fetch(proxied_host + "user/reviews/received", 
-    { method: 'GET', headers: authorized_headers(token) }
+export function get_user_received_reviews(user: string, callback: (resp: ReviewsWithAverage) => void) {
+    fetch(proxied_host + "user/reviews/received/" + user, 
+    { method: 'GET', headers: default_headers }
     ).then(resp => resp.json()).then(json => callback(json as ReviewsWithAverage))
 }
 

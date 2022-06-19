@@ -15,7 +15,7 @@ import { get_item_with_reviews, ItemWithReviews } from "../../api/item";
 import ItemWithAssets from "../../model/ItemWithAssets";
 import { post_cart } from "../../api/cart";
 import { Response } from "../../model/Response";
-import { post_review } from "../../api/review";
+import { get_user_received_reviews, post_review, ReviewsWithAverage } from "../../api/review";
 
 type Props = {
     img: string,
@@ -46,6 +46,7 @@ export default function Item() {
     const [cookies, setCookie] = useCookies();
     const [review, setReview] = useState("");
     const [rating, setRating] = useState(0);
+    const [sellerRating, setSellerRating] = useState(0);
 
     const [successSnack, setSuccessSnack] = useState(false);
     const [errorSnack, setErrorSnack] = useState(false);
@@ -80,6 +81,15 @@ export default function Item() {
         })
     }, [])
 
+    useEffect(() => {
+        if(seller !== undefined) {
+            get_user_received_reviews(seller!.username, (resp: ReviewsWithAverage) => {
+                console.log(resp.average)
+                setSellerRating(resp.average);
+            });
+        }
+    }, [seller])
+
     function postCart() {
         post_cart(id!, 1, cookies.access_token, (resp: Response) => {
             if(!resp.status) {
@@ -100,7 +110,7 @@ export default function Item() {
             } else {
                 setReviews(reviews.concat(
                     {
-                        reviewer: UserStorage.getUser(),
+                        user: UserStorage.getUser(),
                         message: review,
                         rate: rating*2
                     }
@@ -170,6 +180,7 @@ export default function Item() {
                                 </div>
                             </div>
                             <p className="font-inter text-md text-gray-700 font-bold mt-8">Avaliação geral:</p>
+                            <Rating className="mt-1" precision={0.5} name="read-only" value={sellerRating/2} readOnly size="small"/>
                         </div>
                     </div>
                 </div>

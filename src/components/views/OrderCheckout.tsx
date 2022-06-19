@@ -71,6 +71,7 @@ export default function OrderCheckout() {
                 setErrorSnack(true);
                 setErrorMessage(resp.message);
             }
+            window.location.href = "/orders"
             setSuccessSnack(true);
             setSuccessMessage(resp.message);
         })
