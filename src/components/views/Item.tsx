@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import Review from "../Review";
 import { json } from "stream/consumers";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { Rating, Snackbar } from "@mui/material";
+import { Rating, Snackbar, ThemeProvider } from "@mui/material";
 import { proxied_host } from "../../api/spec"
 import User from "../../model/User";
 import UserStorage from "../../model/UserStorage";
@@ -16,6 +16,7 @@ import ItemWithAssets from "../../model/ItemWithAssets";
 import { post_cart } from "../../api/cart";
 import { Response } from "../../model/Response";
 import { get_user_received_reviews, post_review, ReviewsWithAverage } from "../../api/review";
+import { theme } from "../../theme/theme";
 
 type Props = {
     img: string,
@@ -68,7 +69,7 @@ export default function Item() {
             setPreco(item.item.item.price);
             setDesc(item.item.item.description);
             setRating(item.average);
-            if(item.reviews !== undefined && item.reviews !== null) {
+            if (item.reviews !== undefined && item.reviews !== null) {
                 setReviews(item.reviews);
             }
             setSeller(item.item.item.seller);
@@ -82,7 +83,7 @@ export default function Item() {
     }, [])
 
     useEffect(() => {
-        if(seller !== undefined) {
+        if (seller !== undefined) {
             get_user_received_reviews(seller!.username, (resp: ReviewsWithAverage) => {
                 console.log(resp.average)
                 setSellerRating(resp.average);
@@ -92,10 +93,10 @@ export default function Item() {
 
     function postCart() {
         post_cart(id!, 1, cookies.access_token, (resp: Response) => {
-            if(!resp.status) {
+            if (!resp.status) {
                 setErrorSnack(true);
                 setErrorMessage(resp.message);
-                return 
+                return
             }
             setSuccessSnack(true);
             setSuccessMessage(resp.message);
@@ -103,8 +104,8 @@ export default function Item() {
     }
 
     function postReview() {
-        post_review({item: id!, rate: rating*2, message: review}, cookies.access_token, (resp: Response) => {
-            if(!resp.status) {
+        post_review({ item: id!, rate: rating * 2, message: review }, cookies.access_token, (resp: Response) => {
+            if (!resp.status) {
                 setErrorSnack(true);
                 setErrorMessage(resp.message);
             } else {
@@ -112,7 +113,7 @@ export default function Item() {
                     {
                         user: UserStorage.getUser(),
                         message: review,
-                        rate: rating*2
+                        rate: rating * 2
                     }
                 ));
                 setSuccessSnack(true);
@@ -143,8 +144,8 @@ export default function Item() {
                                 <div className="w-1/2">
                                     <div className="flex text-sm font-inter font-semibold my-auto ml-2 mr-2 text-gray-700">
                                         <p className="mt-1 mr-2">Avaliação: </p>
-                                        { rating == -1 ? <p className="w-full"> Nenhuma avaliação</p> :
-                                            <Rating className="mt-1" precision={0.5} name="read-only" value={rating/2} readOnly size="small"/>
+                                        {rating == -1 ? <p className="w-full"> Nenhuma avaliação</p> :
+                                            <Rating className="mt-1" precision={0.5} name="read-only" value={rating / 2} readOnly size="small" />
                                         }
                                     </div>
                                 </div>
@@ -180,7 +181,7 @@ export default function Item() {
                                 </div>
                             </div>
                             <p className="font-inter text-md text-gray-700 font-bold mt-8">Avaliação geral:</p>
-                            <Rating className="mt-1" precision={0.5} name="read-only" value={sellerRating/2} readOnly size="small"/>
+                            <Rating className="mt-1" precision={0.5} name="read-only" value={sellerRating / 2} readOnly size="small" />
                         </div>
                     </div>
                 </div>
@@ -189,7 +190,7 @@ export default function Item() {
                 <div className="flex justify-center">
                     <div className="p-5 w-full md:w-[86.5%] bg-white rounded-xl border-[1px] border-gray-300">
                         <div className="flex md:ml-14">
-                            <svg className="w-6 h-6 fill-yellow-400 my-auto" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z" fill-rule="nonzero"/></svg>
+                            <svg className="w-6 h-6 fill-yellow-400 my-auto" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z" fill-rule="nonzero" /></svg>
                             <p className="font-inter font-bold text-gray-900 text-lg ml-4 mt-6 mb-6">Avaliações dos usuários:</p>
                         </div>
                         {(reviews === undefined || reviews.length === 0)
@@ -228,16 +229,18 @@ export default function Item() {
                     </div>
                 </div>
             </div>
-            <Snackbar open={successSnack} autoHideDuration={4000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    {successMessage}
-                </Alert>
-            </Snackbar>
-            <Snackbar open={errorSnack} autoHideDuration={4000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                    {errorMessage}
-                </Alert>
-            </Snackbar>
+            <ThemeProvider theme={theme}>
+                <Snackbar open={successSnack} autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                        {successMessage}
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={errorSnack} autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
+            </ThemeProvider>
         </div>
     )
 }

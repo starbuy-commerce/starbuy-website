@@ -9,8 +9,8 @@ export function login(info: Login, callback: (resp: AuthResponse) => void) {
     }).then(resp => resp.json()).then(json => callback(json as AuthResponse))
 }
 
-interface IncomingUser { name: string, email: string, city: string, birthdate: string, seller: boolean, profile_picture: string, password: string}
-export function Register(incoming: IncomingUser, callback: (resp: AuthResponse) => void) {
+export interface IncomingUser { name: string, email: string, city: string, birthdate: string, seller: boolean, profile_picture: string, password: string, username:string}
+export function register_user(incoming: IncomingUser, callback: (resp: AuthResponse) => void) {
     fetch(proxied_host + "register", {
         method: 'POST', headers: default_headers, body: JSON.stringify(incoming)
     }).then(resp => resp.json()).then(json => callback(json as AuthResponse))
