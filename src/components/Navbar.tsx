@@ -37,11 +37,11 @@ export default function Navbar({ fixed, bottomBar }: Prop) {
                             </button>
                         </div>
                     </div>
-                    <ul className="flex flex-row text-white my-auto">
-                        {cookies.access_token == undefined &&
+                    <div className="flex flex-row text-white my-auto">
+                        {cookies.access_token === undefined &&
                             <TransitionButton duration={200} src={login} target_url="/login" />}
-                        {cookies.access_token != undefined && <UserDropDownMenu visible={true}/>}
-                    </ul>
+                        {cookies.access_token !== undefined && <UserDropDownMenu visible={true}/>}
+                    </div>
                 </nav>
                 {bottomBar && <div className="h-1 bg-indigo-400"></div>}
             </div>
