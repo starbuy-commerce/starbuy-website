@@ -31,6 +31,12 @@ export default function RegisterForm() {
         const incoming: IncomingUser = {
             name: name, email: email, city: city, birthdate: birthdate, seller: seller, profile_picture: 'https://png.pngtree.com/png-vector/20190710/ourlarge/pngtree-user-vector-avatar-png-image_1541962.jpg', password: password, username: username 
         }
+
+        if(name === "" || email === "" || city === "" || birthdate === "" || username === "" || password === "" || confirm === "") {
+            alert("Preencha todos os campos");
+            return;
+        }
+
         register_user(incoming, (resp: AuthResponse) => {
             if (!resp.status) {
                 console.log(resp.message);
@@ -53,25 +59,28 @@ export default function RegisterForm() {
     ]
 
     return (
-        <div className="bg-gray-100 h-screen p-5 flex justify-center">
-            <div className="bg-white rounded-lg border-2 border-yellow-300 p-10 md:w-3/6">
-                <div className="h-full flex flex-col justify-between">
-                    <div>
-                        <Stepper alternativeLabel activeStep={step} connector={<QontoConnector />}>
-                            {steps.map((label) => (
-                                <Step key={label}>
-                                    <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
-                        {step == 0 ? <PessoalDataForm name={name} setName={setName} city={city} setCity={setCity} birthdate={birthdate} setBirthdate={setBirthdate} email={email} setEmail={setEmail} />
-                            : step == 1 ? <LoginDataForm password={password} setPassword={setPassword} confirm={confirm} setConfirm={setConfirm} username={username} setUsername={setUsername}/> 
-                            : step == 2 ? <SellerAsk setSeller={setSeller} seller={seller} /> : <div></div>}
-                    </div>
-                    <div className="ml-auto mr-0">
-                        <div className="flex gap-x-4">
-                            <Button disabled={step == 0} onClick={() => setStep(step - 1)}>Voltar</Button>
-                            <Button onClick={() => {if (step == 2) {registrar()} else {setStep(step + 1)}}}>{step == 2 ? "Finalizar" : "Próximo"}</Button>
+        <div>
+            <p className="text-3xl mt-4 text-center font-bold text-gray-700">Ficamos felizes em ter você conosco!</p>
+            <div className="h-screen p-5 flex justify-center">
+                <div className="bg-white rounded-lg border-2 border-yellow-300 p-10 md:w-3/6">
+                    <div className="h-full flex flex-col justify-between">
+                        <div>
+                            <Stepper alternativeLabel activeStep={step} connector={<QontoConnector />}>
+                                {steps.map((label) => (
+                                    <Step key={label}>
+                                        <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                            {step == 0 ? <PessoalDataForm name={name} setName={setName} city={city} setCity={setCity} birthdate={birthdate} setBirthdate={setBirthdate} email={email} setEmail={setEmail} />
+                                : step == 1 ? <LoginDataForm password={password} setPassword={setPassword} confirm={confirm} setConfirm={setConfirm} username={username} setUsername={setUsername}/>
+                                    : step == 2 ? <SellerAsk setSeller={setSeller} seller={seller} /> : <div></div>}
+                        </div>
+                        <div className="ml-auto mr-0">
+                            <div className="flex gap-x-4">
+                                <Button disabled={step == 0} onClick={() => setStep(step - 1)}>Voltar</Button>
+                                <Button onClick={() => {if (step == 2) {registrar()} else {setStep(step + 1)}}}>{step == 2 ? "Finalizar" : "Próximo"}</Button>
+                            </div>
                         </div>
                     </div>
                 </div>

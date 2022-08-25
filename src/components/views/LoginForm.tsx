@@ -55,8 +55,8 @@ export default function LoginForm() {
                                 <span className="font-rubik font-bold text-3xl md:text-4xl text-gray-800">a </span>
                                 <span className="font-rubik font-extrabold text-5xl md:text-6xl text-purple-600">Starbuy!</span>
                             </div>
-                            <p className="font-rubik font-bold md:max-w-lg text-sm text-gray-600 mt-16">Faça login com a sua conta. Não tem uma?
-                                <a href="" className="text-yellow-500" onClick={() => window.location.href = "/register"}> Registre-se</a>
+                            <p className="flex font-rubik font-bold md:max-w-lg text-sm text-gray-600 mt-16">Faça login com a sua conta. Não tem uma?
+                                <p className="text-yellow-500 hover:cursor-pointer ml-2" onClick={() => window.location.href = "/register"}> Registre-se</p>
                             </p>
                             <p id="error" className="font-rubik font-bold md:max-w-lg text-sm text-rose-600 mt-4">
                                 {error}
