@@ -35,13 +35,36 @@ export function query_category(category: number, callback: (resp: ItemWithAssets
     }).then(resp => resp.json()).then(json => callback(json as ItemWithAssets[]))
 }
 
-interface RawItem { title: string, seller: string, price: number, stock: number, category: number, description: string } 
+interface RawItem { title: string, price: number, stock: number, category: number, description: string, image: string }
 export function post_item(token: string, item: RawItem, callback: (resp: Response) => void) {
+    console.log(JSON.stringify({
+        item: {
+            identifier: "",
+            title: item.title,
+            seller: "",
+            price: item.price,
+            stock: item.stock,
+            category: item.category,
+            description: item.description
+        },
+        assets: [
+            item.image
+        ]
+    }))
     fetch(proxied_host + "item/", {
-        method: 'POST', headers: authorized_headers(token), body: JSON.stringify(item)
+        method: 'POST', headers: authorized_headers(token), body: JSON.stringify({
+            item: {
+                identifier: "",
+                title: item.title,
+                seller: "",
+                price: item.price,
+                stock: item.stock,
+                category: item.category,
+                description: item.description
+            },
+            assets: [
+                item.image
+            ]
+        })
     }).then(resp => resp.json()).then(json => callback(json as Response))
-}
-
-export function delete_item(callback: (resp: Response) => void) {
-
 }

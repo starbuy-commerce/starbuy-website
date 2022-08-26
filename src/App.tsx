@@ -12,6 +12,7 @@ import OrderCheckout from './components/views/OrderCheckout';
 import RegisterForm from './components/views/register/RegisterForm';
 import { createMuiTheme, createTheme, ThemeProvider } from '@material-ui/core';
 import { theme } from './theme/theme';
+import ItemAdd from "./components/views/ItemAdd";
 
 class App extends Component {
   container;
@@ -39,6 +40,7 @@ class App extends Component {
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<OrderCheckout />} />
               <Route path="/register" element={<RegisterForm />} />
+              <Route path="/additem" element={<ItemAdd />} />
             </Routes>
           </Router>
         </div>
