@@ -1,9 +1,9 @@
 export default function LoginDataForm({ password, setPassword, confirm, setConfirm, username, setUsername }: any) {
     return (
-        <div className="">
-            <div className="mt-12 mx-12 w-3/4">
+        <div className="w-full">
+            <div className="">
                 <div>
-                    <p className="font-inter text-sm">Username:</p>
+                    <p className="font-inter text-xs">Username:</p>
                     <input
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -12,7 +12,7 @@ export default function LoginDataForm({ password, setPassword, confirm, setConfi
                 </div>
                 <div className="mt-12 w-full">
                     <div className="w-full md:mr-8">
-                        <p className="font-inter text-sm">Senha:</p>
+                        <p className="font-inter text-xs">Senha:</p>
                         <input
                             type="password"
                             value={password}
@@ -21,7 +21,7 @@ export default function LoginDataForm({ password, setPassword, confirm, setConfi
                         />
                     </div>
                     <div className="mt-4">
-                        <p className="font-inter text-sm">Confirmar senha:</p>
+                        <p className="font-inter text-xs">Confirmar senha:</p>
                         <input
                             type="password"
                             value={confirm}

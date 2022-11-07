@@ -36,6 +36,11 @@ export default function Orders() {
                                             <p>Quantidade: {order.quantity} unidade(s)</p>
                                             <p>Endereço de entrega: Trampo</p>
                                             <div className="flex mt-4">
+                                                {
+                                                    // 0 - Em preparo
+                                                    // 1 - Enviado
+                                                    // 2 - Recebido
+                                                }
                                                 <p>Status:
                                                     <span className="text-green-400 font-bold"> ENVIADO</span>
                                                 </p>

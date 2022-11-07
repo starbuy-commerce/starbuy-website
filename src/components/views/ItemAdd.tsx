@@ -14,6 +14,15 @@ export default function ItemAdd() {
     const [stock, setStock] = useState(0);
     const [cookie, setCookie] = useCookies();
 
+    const readImage = (e: any) => {
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (readerEvent: any) => {
+            setImage(readerEvent.target.result);
+        }
+    }
+
     const post = () => {
         if(name === "" || description === "" || price === 0 || image === "" || category === 0 || stock === 0) {
             alert("Preencha todos os campos");
@@ -49,14 +58,6 @@ export default function ItemAdd() {
                         className="p-1 pl-2 rounded-md outline-none resize-none border-[1px] border-indigo-500 text-xs w-full h-8"
                     />
                 </div>
-                <div className="mb-4">
-                    <p className="font-inter text-xs">URL da imagem:</p>
-                    <input
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        className="p-1 pl-2 rounded-md outline-none border-[1px] border-indigo-500 text-xs w-full h-8"
-                    />
-                </div>
                 <div className="flex gap-4 mb-4">
                     <div className="w-1/3">
                         <p className="font-inter text-xs">Preço unitário:</p>
@@ -80,6 +81,15 @@ export default function ItemAdd() {
                             className="p-1 pl-2 rounded-md outline-none border-[1px] border-indigo-500 text-xs w-full h-8"
                         />
                     </div>
+                </div>
+                <div className="mb-4">
+                    <p className="font-inter text-xs">Imagem:</p>
+                    <input
+                        type="file"
+                        value={image}
+                        onChange={(e) => readImage(e)}
+                        className="rounded-md outline-none text-xs w-full h-8"
+                    />
                 </div>
                 <div onClick={post} className="w-full border-[1px] mt-8 p-1 border-indigo-500 text-center rounded-md text-indigo-500">CADASTRAR PRODUTO</div>
             </div>

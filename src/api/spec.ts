@@ -12,7 +12,7 @@ export function checkBackupHost() {
             'Access-Control-Allow-Origin': '*'
         }
     }).then(response => {
-        if(response.status == 503) {
+        if(response.status === 503) {
             host = railway_host
         }
     })

@@ -18,7 +18,7 @@ export default function Dropdown({options, setter, value, disabled, placeholder,
     }
 
     const handleClick = (element: any) => {
-        if (element != value && isActive) {
+        if (element !== value && isActive) {
             setter(element);
             onChange()
             setActive(false)
