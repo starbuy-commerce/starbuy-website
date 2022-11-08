@@ -52,10 +52,10 @@ export default function ItemAdd() {
                 <div className="mb-4">
                     <p className="font-inter text-xs">Descrição do produto:</p>
                     <textarea
-                        rows={3}
+                        rows={5}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="p-1 pl-2 rounded-md outline-none resize-none border-[1px] border-indigo-500 text-xs w-full h-8"
+                        className="p-1 pl-2 rounded-md outline-none resize-none border-[1px] border-indigo-500 text-xs w-full"
                     />
                 </div>
                 <div className="flex gap-4 mb-4">
@@ -86,7 +86,6 @@ export default function ItemAdd() {
                     <p className="font-inter text-xs">Imagem:</p>
                     <input
                         type="file"
-                        value={image}
                         onChange={(e) => readImage(e)}
                         className="rounded-md outline-none text-xs w-full h-8"
                     />

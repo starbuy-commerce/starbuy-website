@@ -7,6 +7,8 @@ import clothes from "../../images/category/clothes.svg"
 import books from "../../images/category/books.svg"
 import home from "../../images/category/home.svg"
 import guitarLogo from "../../images/category/guitar.svg"
+import ruler from "../../images/ruler.svg"
+import joystick from "../../images/joystick.svg"
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Review from "../Review";
@@ -43,12 +45,15 @@ const Home = () => {
         <>
             <Navbar fixed={true} bottomBar={true} />
             <div className="mt-32 mb-10">
+                <p className="text-center font-rubik mb-12 text-xl text-gray-700 font-normal"><span className="text-indigo-600 font-bold">Explore</span> nossos produtos:</p>
                 <div className="md:flex gap-6 justify-center hidden">
-                    <CategoryButton img={tech} size="w-10 h-10" category="Eletrônico" id={1} />
-                    <CategoryButton img={clothes} size="w-10 h-10" category="Vestuário" id={2} />
-                    <CategoryButton img={books} size="w-8 h-8" category="Livros" id={4} />
-                    <CategoryButton img={guitarLogo} size="w-8 h-8" category="Música" id={7} />
-                    <CategoryButton img={home} size="w-8 h-8" category="Casa" id={3} />
+                    <CategoryButton img={tech} size="w-6 h-6" category="Eletrônico" id={1} />
+                    <CategoryButton img={clothes} size="w-6 h-6" category="Vestuário" id={2} />
+                    <CategoryButton img={home} size="w-6 h-6" category="Casa" id={3} />
+                    <CategoryButton img={books} size="w-5 h-5" category="Livros" id={4} />
+                    <CategoryButton img={ruler} size="w-5 h-5" category="Papelaria" id={5} />
+                    <CategoryButton img={joystick} size="w-6 h-6" category="Jogos" id={6} />
+                    <CategoryButton img={guitarLogo} size="w-6 h-6" category="Música" id={7} />
                 </div>
                 
                 <div className="md:hidden md:invisible">

@@ -11,10 +11,10 @@ export default function CategoryButton({img, category, size, id}: Props) {
 
     return (
         <div className="cursor-pointer flew-grow" onClick={() => window.location.href="/category/" + id}>
-            <div className="rounded-full border-4 border-violet-600 w-14 h-14 flex mx-auto hover:bg-yellow-300 transition duration-300 ease-in-out">
+            <div className="rounded-full border-2 border-violet-600 w-10 h-10 flex mx-auto hover:bg-yellow-300 transition duration-300 ease-in-out">
                 <img className={`mx-auto justify-center my-auto ${size}`} src={img}/>
             </div>
-            <p className="text-violet-700 text-sm font-semibold text-center">{category}</p>
+            <p className="text-violet-700 text-xs font-rubik text-center mt-2">{category}</p>
         </div>
     );
 }
