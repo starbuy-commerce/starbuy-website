@@ -6,13 +6,12 @@ import Item from './components/views/Item';
 import User from './components/views/User';
 import Cart from './components/views/Cart';
 import Orders from './components/views/Orders';
-import Settings from './components/views/Settings';
-import { checkBackupHost } from "./api/spec"
 import OrderCheckout from './components/views/OrderCheckout';
 import RegisterForm from './components/views/register/RegisterForm';
 import { createMuiTheme, createTheme, ThemeProvider } from '@material-ui/core';
 import { theme } from './theme/theme';
 import ItemAdd from "./components/views/ItemAdd";
+import Settings from "./components/views/Settings";
 
 class App extends Component {
   container;

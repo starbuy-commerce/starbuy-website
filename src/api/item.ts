@@ -37,7 +37,7 @@ export function query_category(category: number, callback: (resp: ItemWithAssets
 
 interface RawItem { title: string, price: number, stock: number, category: number, description: string, image: string }
 export function post_item(token: string, item: RawItem, callback: (resp: Response) => void) {
-    console.log(JSON.stringify({
+    const value = {
         item: {
             identifier: "",
             title: item.title,
@@ -50,21 +50,9 @@ export function post_item(token: string, item: RawItem, callback: (resp: Respons
         assets: [
             item.image
         ]
-    }))
+    };
+    console.log(JSON.stringify(value))
     fetch(proxied_host + "item/", {
-        method: 'POST', headers: authorized_headers(token), body: JSON.stringify({
-            item: {
-                identifier: "",
-                title: item.title,
-                seller: "",
-                price: item.price,
-                stock: item.stock,
-                category: item.category,
-                description: item.description
-            },
-            assets: [
-                item.image
-            ]
-        })
-    }).then(resp => resp.json()).then(json => callback(json as Response))
+        method: 'POST', headers: authorized_headers(token), body: JSON.stringify(value)})
+        .then(resp => resp.json()).then(json => callback(json as Response))
 }

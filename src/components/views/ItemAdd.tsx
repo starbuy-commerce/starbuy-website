@@ -29,7 +29,15 @@ export default function ItemAdd() {
             return;
         }
 
+        if(description.length > 512) {
+            alert("Descrição muito grande!");
+            return;
+        }
+
         post_item(cookie.access_token, {title: name, price: price, stock: stock, category: category.value, description: description, image: image}, resp => {
+            if(!resp.status) {
+                console.log(resp.message)
+            }
             alert("Produto cadastrado com sucesso!")
             window.location.href = "/"
         })
@@ -44,6 +52,7 @@ export default function ItemAdd() {
                 <div className="mb-4">
                     <p className="font-inter text-xs">Nome do produto:</p>
                     <input
+                        maxLength={256}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="p-1 pl-2 rounded-md outline-none border-[1px] border-indigo-500 text-xs w-full h-8"
@@ -53,6 +62,7 @@ export default function ItemAdd() {
                     <p className="font-inter text-xs">Descrição do produto:</p>
                     <textarea
                         rows={5}
+                        maxLength={512}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         className="p-1 pl-2 rounded-md outline-none resize-none border-[1px] border-indigo-500 text-xs w-full"
@@ -90,8 +100,8 @@ export default function ItemAdd() {
                         className="rounded-md outline-none text-xs w-full h-8"
                     />
                 </div>
-                <div onClick={post} className="w-full border-[1px] mt-8 p-1 border-indigo-500 text-center rounded-md text-indigo-500">CADASTRAR PRODUTO</div>
             </div>
+            <div onClick={post} className="w-96 mx-auto hover:bg-indigo-400 hover:text-white hover:transition-colors duration-500 hover:cursor-pointer border-[1px] mt-8 p-1 border-indigo-500 text-center py-1.5 rounded-md text-indigo-500">CADASTRAR PRODUTO</div>
         </div>
     );
 }
