@@ -40,7 +40,7 @@ const Home = () => {
             return
         }
 
-    }, [category, query])
+    }, [])
 
     return (
         <>
@@ -63,7 +63,7 @@ const Home = () => {
                 </div>
 
                 <Carousel show={5}>
-                    {items === null || items === undefined || items.length == 0 ? <p>Nenhum item encontrado</p>
+                    {items === null || items === undefined || items.length === 0 ? <p>Nenhum item encontrado</p>
                         : items.map(item => {
                             const image: string = item.assets[0];
                             return (<ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />)
