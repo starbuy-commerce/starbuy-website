@@ -4,6 +4,14 @@ export const categories = [
         value: 1,
     },
     {
+        label: "Jogos",
+        value: 6
+    },
+    {
+        label: "Papelaria",
+        value: 5
+    },
+    {
         label: "Vestuário",
         value: 2
     },
