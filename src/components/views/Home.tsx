@@ -10,27 +10,28 @@ import home from "../../images/category/home.svg"
 import guitarLogo from "../../images/category/guitar.svg"
 import ruler from "../../images/ruler.svg"
 import joystick from "../../images/joystick.svg"
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import Review from "../Review";
 import {proxied_host} from "../../api/spec";
 import {get_items, query_category, query_items} from "../../api/item";
 import {Response} from "../../model/Response";
 import ItemWithAssets from "../../model/ItemWithAssets";
-import Carousel from "../carousel/Carousel";
 import {Swiper, SwiperSlide} from "swiper/react";
+import {Skeleton} from "@mui/material";
 
 const Home = () => {
 
     const {category} = useParams();
-    const [items, setItems] = useState<ItemWithAssets[]>([])
+    const [items, setItems] = useState<any[]>([])
+    const [received, setReceived] = useState<boolean>(false)
     const {query} = useParams();
 
     useEffect(() => {
         if (category === undefined && query === undefined) {
             get_items((resp: ItemWithAssets[]) => {
-                console.log(resp)
                 setItems(resp)
+                setReceived(true)
             })
             return
         }
@@ -72,15 +73,27 @@ const Home = () => {
                     slidesPerView={6}
                     loop={true}
                 >
-                    {items === null || items === undefined || items.length === 0 ? <p>Nenhum item encontrado</p>
-                        : items.map(item => {
+                    {(received && items.length > 0) ?
+                        items.map(item => {
                             const image: string = item.assets[0];
                             return (
                                 <SwiperSlide className="p-8">
                                     <ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />
                                 </SwiperSlide>
                             )
-                        })}
+                        })
+                    : (received && items.length === 0) ?
+                        <p>Nenhum item encontrado</p>
+                    :
+                            <div className="flex gap-x-16 mx-auto mt-12">
+                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                            </div>
+                    }
+
                 </Swiper>
                 );
             </div>

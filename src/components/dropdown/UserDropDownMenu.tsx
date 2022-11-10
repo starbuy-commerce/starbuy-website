@@ -48,7 +48,7 @@ export default function UserDropDownMenu({ visible }: Prop) {
 
     return (
         <div className="flex flex-col">
-            <img src={UserStorage.getPfp()} onClick={onClick} className='rounded-full border-indigo-600 w-10 h-10 mr-12 mt-2 border-[3px] top-[-10] cursor-pointer' />
+            <img src={UserStorage.getPfp()} onClick={onClick} className='rounded-full object-cover border-indigo-600 w-10 h-10 mr-12 mt-2 border-[3px] top-[-10] cursor-pointer' />
             <div className={`absolute transition-opacity duration-200 ${isActive ? "opacity-100" : "opacity-0"} ${isActive ? "z-20" : "-z-10"} float-right right-10 top-[-50px] bg-white rounded-lg mx-auto mt-32 w-72 border-[1px] border-yellow-300 overflow-auto`}>
             {sections.map((section, i, arr) => {
                 return (
