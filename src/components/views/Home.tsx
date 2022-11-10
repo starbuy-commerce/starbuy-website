@@ -83,14 +83,6 @@ const Home = () => {
                         })}
                 </Swiper>
                 );
-
-                {/*<Carousel show={3} infiniteLoop={true}>
-                    {items === null || items === undefined || items.length === 0 ? <p>Nenhum item encontrado</p>
-                        : items.map(item => {
-                            const image: string = item.assets[0];
-                            return (<ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />)
-                        })}
-                </Carousel>*/}
             </div>
         </>
     );
