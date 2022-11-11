@@ -22,7 +22,7 @@ const Cart = () => {
             <div className="">
                 <div className="font-inter text-[#4A4A4A]">
                     <h1 className="font-inter font-bold text-2xl ml-20 mt-12 mb-12">MEU CARRINHO</h1>
-                    {received && cartItems.length === 0
+                    {(received && (cartItems === null || cartItems.length === 0))
                         ?
                         <p className="text-lg font-inter font-medium ml-20">Você não tem nenhum item no seu carrinho</p>
                         : received && cartItems.length > 0 ?

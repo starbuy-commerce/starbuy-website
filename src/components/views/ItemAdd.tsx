@@ -47,7 +47,7 @@ export default function ItemAdd() {
     return (
         <div>
             <Navbar fixed={false} bottomBar={true}/>
-            <div className="w-2/3 mx-auto mt-16">
+            <div className="md:w-2/3 mx-4 md:mx-auto mt-16">
                 <p className="font-inter text-2xl font-bold text-gray-700 mt-16 mb-16">Adicionar produto</p>
                 <div className="mb-4">
                     <p className="font-inter text-xs">Nome do produto:</p>
