@@ -20,6 +20,14 @@ import ItemWithAssets from "../../model/ItemWithAssets";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Skeleton} from "@mui/material";
 
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+
 const Home = () => {
 
     const {category} = useParams();
@@ -69,9 +77,18 @@ const Home = () => {
                 </div>
 
                 <Swiper
-                    spaceBetween={50}
-                    slidesPerView={6}
+                    slidesPerView={3}
                     loop={true}
+                    breakpoints={{
+                        320: {
+                            slidesPerView: 4,
+                            spaceBetween: 0
+                        },
+                        768: {
+                            spaceBetween: 50,
+                            slidesPerView: 6,
+                        },
+                    }}
                 >
                     {(received && items.length > 0) ?
                         items.map(item => {
