@@ -85,8 +85,8 @@ const Home = () => {
                             spaceBetween: 0
                         },
                         768: {
-                            spaceBetween: 50,
-                            slidesPerView: 6,
+                            spaceBetween: 30,
+                            slidesPerView: 8,
                         },
                     }}
                 >
