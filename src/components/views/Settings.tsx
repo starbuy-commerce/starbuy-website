@@ -24,20 +24,23 @@ export default function Settings() {
 
     useEffect(() => {
         get_addresses(UserStorage.getUsername(), cookies.access_token, resp => {
-            if(resp !== null) {
+            const fullAddresses: any[] = [];
+            if (resp !== null) {
                 resp.forEach(r => {
-                    fetch("viacep.com.br/ws/" + r.cep + "/json/",
+                    fetch("https://viacep.com.br/ws/" + r.cep + "/json/",
                         {method: 'GET', headers: default_headers}
                     ).then(resp => resp.json()).then(json => {
-                            setAddresses((prevState: any) => [...prevState,
-                                {
-                                    identifier: r.identifier,
-                                    name: r.name,
-                                    info: json as CEPApiResponse,
-                                }])
-                        }
-                    )
+                        fullAddresses.push(
+                            {
+                                identifier: r.identifier,
+                                name: r.name,
+                                info: json as CEPApiResponse,
+                                number: r.number
+                            }
+                        )
+                    })
                 })
+                setAddresses(fullAddresses)
             }
         })
     }, [])
@@ -77,20 +80,11 @@ export default function Settings() {
                             <div className={`
                             ${i === 0 ? "md:rounded-t-xl" : "md:border-t-0"}
                             ${i === addresses.length - 1 ? "md:rounded-b-xl" : "md:border-b-0"}
-                            p-4 md:mx-16 md:border-[1px]
+                            p-4 md:border-[1px]
                             border-indigo-400
                         `}>
-                                <div className="flex">
-                                    <div className="ml-4">
-                                        <div className="flex">
-                                            <p className="font-inter text-gray-800 font-medium text-[0.95rem]">{address}</p>
-                                            <div className="ml-4">
-                                                <Rating precision={0.5} name="read-only" value={rating/2} readOnly size="small"/>
-                                            </div>
-                                        </div>
-                                        <p className="font-inter text-gray-900 text-sm mt-2 w-full text-justify">{description}</p>
-                                    </div>
-                                </div>
+                                <p className="font-inter text-gray-800">{address.name}</p>
+                                <p className="font-inter text-gray-800 text-xs">{address.info.logradouro}, {address.info.number}</p>
                             </div>
                         );
                     })}
