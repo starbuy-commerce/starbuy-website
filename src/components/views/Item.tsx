@@ -136,7 +136,7 @@ export default function Item() {
                 <div className="md:w-4/6 md:flex p-5 rounded-xl bg-white border-[1px] border-gray-300">
                     <div className="md:w-3/6 rounded-lg mr-12">
                         {imagem !== ""
-                            ? <img src={imagem} className="h-64 w-64 mb-4 md:mb-0 md:h-96 md:w-96 p-4" alt=""/>
+                            ? <img src={imagem} className="h-64 w-64 mb-4 md:mb-0 md:h-96 md:w-96 object-cover p-4" alt=""/>
                             : <Skeleton variant="rectangular" animation="pulse" width={380} height={380}/>
                         }
                     </div>
