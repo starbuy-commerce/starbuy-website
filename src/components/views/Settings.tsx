@@ -75,6 +75,12 @@ export default function Settings() {
     }
 
     const cadastrarEndereco = () => {
+
+        if(inputCEP === undefined || inputNome === "" || inputNumber === undefined) {
+            alert("Preencha os campos necessários")
+            return
+        }
+
         post_address(cookies.access_token, inputCEP, inputNumber!, inputComplemento, inputNome, resp => {
             alert(resp.message)
             if(resp.status) {
@@ -161,7 +167,7 @@ export default function Settings() {
                            className="text-gray-600 pl-2 h-8 font-normal text-sm p-1 border-[1px] border-purple-600 w-1/2 rounded-lg w-full outline-none"/>
                 </div>
                 <div className="w-full flex justify-center pt-1 cursor-pointer bg-purple-500 mt-4 h-8 text-sm rounded-lg" onClick={cadastrarEndereco}>
-                    <p className="text-md text-center font-light text-white">Adicionar endereço</p>
+                    <p className="text-md text-center font-light text-white pb-20">Adicionar endereço</p>
                 </div>
             </div>
         </div>
