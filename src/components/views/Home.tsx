@@ -90,16 +90,16 @@ const Home = () => {
                         },
                     }}
                 >
-                    {(received && items.length > 0) ?
+                    {(received && items !== null && items.length > 0) ?
                         items.map(item => {
-                            const image: string = item.assets[0];
+                            const image: string = item.assets === null ? "https://cdn.iconscout.com/icon/free/png-256/gallery-187-902099.png" : item.assets[0]
                             return (
                                 <SwiperSlide className="p-8">
                                     <ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />
                                 </SwiperSlide>
                             )
                         })
-                    : (received && items.length === 0) ?
+                    : (received && (items === null || items.length === 0)) ?
                         <p>Nenhum item encontrado</p>
                     :
                             <div className="flex gap-x-16 mx-auto mt-12">

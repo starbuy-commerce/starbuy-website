@@ -51,6 +51,7 @@ export function post_item(token: string, item: RawItem, callback: (resp: Respons
             item.image
         ]
     };
+    console.log(item)
     console.log(JSON.stringify(value))
     fetch(proxied_host + "item/", {
         method: 'POST', headers: authorized_headers(token), body: JSON.stringify(value)})
