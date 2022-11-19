@@ -2,11 +2,10 @@ import { authorized_headers, default_headers, proxied_host } from "./spec";
 import { Response } from "../model/Response";
 import Order from "../model/Order";
 
-export function post_order(item: string, quantity: number, token: string, callback: (resp: Response) => void) {
+export function post_order(item: string, quantity: number, token: string, endereco: string, callback: (resp: Response) => void) {
     fetch(proxied_host + "order", { headers: authorized_headers(token), method: "POST", 
         body: JSON.stringify({
-            item: item,
-            quantity: quantity
+            send_to: endereco
         })}).then(resp => resp.json()).then(json => callback(json as Response))
 }
 

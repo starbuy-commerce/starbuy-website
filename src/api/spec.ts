@@ -1,5 +1,5 @@
 export const proxy = 'https://blooming-coast-08475.herokuapp.com/'
-export const host = 'https://starbuy.up.railway.app/'
+export const host = 'https://starbuy-api.herokuapp.com/'
 export const proxied_host = proxy + host
 
 export const default_headers = {

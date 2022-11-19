@@ -20,7 +20,7 @@ import ItemWithAssets from "../../model/ItemWithAssets";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Skeleton} from "@mui/material";
 
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import {Navigation, Pagination, Scrollbar, A11y} from 'swiper';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -45,12 +45,18 @@ const Home = () => {
         }
 
         if (category !== undefined) {
-            query_category(parseInt(category), (resp: ItemWithAssets[]) => setItems(resp))
+            query_category(parseInt(category), (resp: ItemWithAssets[]) => {
+                setItems(resp)
+                setReceived(true)
+            })
             return
         }
 
         if (query !== undefined) {
-            query_items(query, (resp: ItemWithAssets[]) => setItems(resp))
+            query_items(query, (resp: ItemWithAssets[]) => {
+                setItems(resp)
+                setReceived(true)
+            })
             return
         }
 
@@ -63,55 +69,66 @@ const Home = () => {
                 <p className="text-center font-rubik mb-12 text-xl text-gray-700 font-normal"><span
                     className="text-indigo-600 font-bold">Explore</span> nossos produtos:</p>
                 <div className="md:flex gap-6 justify-center hidden">
-                    <CategoryButton img={tech} size="w-6 h-6" category="Eletrônico" id={1} />
-                    <CategoryButton img={clothes} size="w-6 h-6" category="Vestuário" id={2} />
-                    <CategoryButton img={home} size="w-6 h-6" category="Casa" id={3} />
-                    <CategoryButton img={books} size="w-5 h-5" category="Livros" id={4} />
-                    <CategoryButton img={ruler} size="w-5 h-5" category="Papelaria" id={5} />
-                    <CategoryButton img={joystick} size="w-6 h-6" category="Jogos" id={6} />
-                    <CategoryButton img={guitarLogo} size="w-6 h-6" category="Música" id={7} />
+                    <CategoryButton img={tech} size="w-6 h-6" category="Eletrônico" id={1}/>
+                    <CategoryButton img={clothes} size="w-6 h-6" category="Vestuário" id={2}/>
+                    <CategoryButton img={home} size="w-6 h-6" category="Casa" id={3}/>
+                    <CategoryButton img={books} size="w-5 h-5" category="Livros" id={4}/>
+                    <CategoryButton img={ruler} size="w-5 h-5" category="Papelaria" id={5}/>
+                    <CategoryButton img={joystick} size="w-6 h-6" category="Jogos" id={6}/>
+                    <CategoryButton img={guitarLogo} size="w-6 h-6" category="Música" id={7}/>
                 </div>
 
                 <div className="md:hidden md:invisible">
                     <CategoryDropdown/>
                 </div>
 
-                <Swiper
-                    slidesPerView={3}
-                    loop={true}
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 4,
-                            spaceBetween: 0
-                        },
-                        768: {
-                            spaceBetween: 30,
-                            slidesPerView: 8,
-                        },
-                    }}
-                >
-                    {(received && items !== null && items.length > 0) ?
-                        items.map(item => {
-                            const image: string = item.assets === null ? "https://cdn.iconscout.com/icon/free/png-256/gallery-187-902099.png" : item.assets[0]
-                            return (
-                                <SwiperSlide className="p-8">
-                                    <ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />
-                                </SwiperSlide>
-                            )
-                        })
-                    : (received && (items === null || items.length === 0)) ?
-                        <p>Nenhum item encontrado</p>
-                    :
-                            <div className="flex gap-x-16 mx-auto mt-12">
-                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                            </div>
-                    }
-
-                </Swiper>
+                {
+                    (category === undefined && query === undefined) ?
+                        <Swiper
+                            slidesPerView={3}
+                            loop={true}
+                            breakpoints={{
+                                320: {
+                                    slidesPerView: 4,
+                                    spaceBetween: 0
+                                },
+                                768: {
+                                    spaceBetween: 30,
+                                    slidesPerView: 8,
+                                },
+                            }}
+                        >
+                            {(received && items !== null && items.length > 0) ?
+                                items.map(item => {
+                                    const image: string = item.assets === null ? "https://cdn.iconscout.com/icon/free/png-256/gallery-187-902099.png" : item.assets[0]
+                                    return (
+                                        <SwiperSlide className="p-8">
+                                            <ProductCard img={image} name={item.item.title} price={item.item.price}
+                                                         id={item.item.identifier}/>
+                                        </SwiperSlide>
+                                    )
+                                })
+                                : (received && (items === null || items.length === 0)) ?
+                                    <p>Nenhum item encontrado</p>
+                                    :
+                                    <div className="flex gap-x-16 mx-auto mt-12">
+                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
+                                    </div>
+                            }
+                        </Swiper>
+                        :
+                        <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center z-0">
+                            {items === null ? <p>Nenhum item encontrado</p>
+                                : items.map(item => {
+                                    const image: string = item.assets === null ? "https://cdn.iconscout.com/icon/free/png-256/gallery-187-902099.png" : item.assets[0]
+                                    return (<ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />)
+                                })}
+                        </div>
+                }
                 );
             </div>
         </>

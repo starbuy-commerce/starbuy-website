@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 import useQuery from "../../hook/useQuery";
 import ItemWithAssets from "../../model/ItemWithAssets";
 import Navbar from "../Navbar"
-import { proxied_host } from "../../api/spec"
-import { Radio, Snackbar } from "@mui/material";
-import { indigo, pink, purple } from "@mui/material/colors";
+import {default_headers, proxied_host} from "../../api/spec"
+import {Radio, Snackbar} from "@mui/material";
+import {indigo, pink, purple} from "@mui/material/colors";
 import RadioGroup from '@mui/material/RadioGroup';
 import CreditCardForm from "../payment/CreditCardForm";
 import BoletoForm from "../payment/BoletoForm";
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { useCookies } from "react-cookie";
-import { post_order } from "../../api/order";
-import { Response } from "../../model/Response";
-import { get_item, ItemWithAverage } from "../../api/item";
+import MuiAlert, {AlertProps} from '@mui/material/Alert';
+import {useCookies} from "react-cookie";
+import {post_order} from "../../api/order";
+import {Response} from "../../model/Response";
+import {get_item, ItemWithAverage} from "../../api/item";
+import {categories} from "../../api/category";
+import Dropdown from "../dropdown/Dropdown";
+import {get_addresses} from "../../api/user";
+import UserStorage from "../../model/UserStorage";
+import CEPApiResponse from "../../model/CEPApiResponse";
 
 interface Props {
     item: ItemWithAssets,
@@ -43,6 +48,25 @@ export default function OrderCheckout() {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [endereco, setEndereco] = useState<any>(undefined)
+    const [enderecos, setEnderecos] = useState<any[]>([])
+
+    useEffect(() => {
+        get_addresses(UserStorage.getUsername(), cookies.access_token, resp => {
+            const fullAddresses: any[] = [];
+            if (resp !== null) {
+                resp.forEach(address => {
+                    fullAddresses.push(
+                        {
+                            value: address.identifier,
+                            label: address.name,
+                        })
+                })
+            }
+            setEnderecos(fullAddresses)
+        })
+    }, [])
+
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
@@ -60,14 +84,23 @@ export default function OrderCheckout() {
         onChange: handleChange,
         value: item,
         name: 'color-radio-button-demo',
-        inputProps: { 'aria-label': item },
+        inputProps: {'aria-label': item},
     });
 
     useEffect(() => get_item(itemId!, (resp: ItemWithAverage) => setItem(resp.item)), [])
 
+    useEffect(() => {
+        console.log(endereco)
+    }, [endereco])
+
     async function postOrder() {
-        post_order(itemId!, parseInt(quantity!), cookies.access_token, (resp: Response) => {
-            if (resp.status == false) {
+        if(endereco === undefined) {
+            alert("Defina um endereço para a entrega")
+            return
+        }
+
+        post_order(itemId!, parseInt(quantity!), cookies.access_token, endereco.value, (resp: Response) => {
+            if (!resp.status) {
                 setErrorSnack(true);
                 setErrorMessage(resp.message);
             }
@@ -79,19 +112,28 @@ export default function OrderCheckout() {
 
     return (
         <div>
-            <Navbar fixed={false} bottomBar={true} />
+            <Navbar fixed={false} bottomBar={true}/>
             <div className="p-5 bg-gray-100">
                 <div className="bg-white p-10 rounded-xl">
                     <p className="font-bold font-inter text-2xl text-gray-700">CONFIRMAR PEDIDO:</p>
                     <p className="ml-20 mt-12 font-inter font-semibold text-xl text-gray-800">REVISAR ITEM:</p>
                     <div className="flex mt-8 ml-20">
-                        <img src={item?.assets[0]} className="w-32 h-32" />
-                        <div className="font-inter my-auto ml-12 font-normal text-xl text-gray-800 gap-y-4">
+                        <img src={item?.assets[0]} className="w-32 h-32 object-cover"/>
+                        <div className="font-inter my-auto ml-12 font-normal text-md text-gray-800 gap-y-4">
                             <p className="mb-3"><b>COMPRANDO</b>: {item?.item.title}</p>
                             <p className="mb-3"><b>QUANTIDADE</b>: {quantity} unidade(s)</p>
                             <p><b>PREÇO FINAL:</b> R$ {item?.item.price! * parseInt(quantity!)}</p>
                         </div>
                     </div>
+                    <p className="ml-20 mt-20 font-inter font-semibold text-xl text-gray-800">ENVIAR PARA:</p>
+
+                    <div className="w-1/4 ml-20 mt-4">
+                        <Dropdown options={enderecos} setter={setEndereco} value={endereco} disabled={false}
+                                  placeholder="Endereço"
+                                  onChange={() => {
+                                  }}/>
+                    </div>
+
                     <p className="ml-20 mt-20 font-inter font-semibold text-xl text-gray-800">FORMA DE PAGAMENTO:</p>
 
                     <div className="flex justify-center gap-24 mt-8">
@@ -120,8 +162,8 @@ export default function OrderCheckout() {
                     </div>
 
                     <div className="mx-auto flex justify-center mt-6">
-                        {payment == 'a' ? <CreditCardForm />
-                            : payment == 'b' ? <BoletoForm />
+                        {payment == 'a' ? <CreditCardForm/>
+                            : payment == 'b' ? <BoletoForm/>
                                 : <></>}
                     </div>
 
@@ -134,12 +176,12 @@ export default function OrderCheckout() {
                 </div>
             </div>
             <Snackbar open={successSnack} autoHideDuration={4000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
                     {successMessage}
                 </Alert>
             </Snackbar>
             <Snackbar open={errorSnack} autoHideDuration={4000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
                     {errorMessage}
                 </Alert>
             </Snackbar>
