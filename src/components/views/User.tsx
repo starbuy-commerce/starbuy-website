@@ -6,6 +6,9 @@ import { proxied_host } from "../../api/spec"
 import ProductCard from "../card/ProductCard";
 import {get_user_received_reviews, ReviewsWithAverage} from "../../api/review";
 import {Rating} from "@mui/material";
+import {update_profile_picture} from "../../api/user";
+import {useCookies} from "react-cookie";
+
 
 export default function User() {
     
@@ -14,9 +17,32 @@ export default function User() {
     const [items, setItems] = useState<any[]>([])
     const [profilePicture, setPfp] = useState<string>("")
     const [rating, setRating] = useState(0)
+    const [cookies, setCookie] = useCookies();
 
     const {username} = useParams();
     const path = username === undefined ? UserStorage.getUsername() : "/" + username;
+
+    const changeImage = () => {
+        if(username !== undefined) {
+            return
+        }
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = _ => {
+            var file = input.files![0];
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (readerEvent: any) => {
+                update_profile_picture(readerEvent.target.result, cookies.access_token, resp=> {
+                    alert(resp.message)
+                    if(resp.status) {
+                        window.location.href = "/user"
+                    }
+                })
+            }
+        };
+        input.click();
+    }
 
     useEffect(() => {
         get_user_received_reviews(username === undefined ? UserStorage.getUsername() : username, (resp: ReviewsWithAverage) => {
@@ -63,11 +89,13 @@ export default function User() {
                     </p>
                 </div>
             </div>
-            <img src={profilePicture} className="rounded-full object-cover border-yellow-400 border-4 w-32 h-32 absolute top-32 ml-10"/>
+            <img src={profilePicture} onClick={changeImage}
+                 className={`${username === undefined ? "cursor-pointer": ""}
+                 rounded-full object-cover border-yellow-400 border-4 w-32 h-32 absolute top-32 ml-10`}/>
 
             <p className="font-inter text-lg text-gray-700 font-semibold md:pl-24 pt-24">Produtos desse usuário:</p>
-            <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-6 justify-center z-0">
-                {items === null || items.length == 0 ? <p>Nenhum item encontrado</p>
+            <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-6 mb-12 justify-center z-0">
+                {items === null || items.length === 0 ? <p>Nenhum item encontrado</p>
                     : items.map(item => {
                         const image: string = item.assets === null ? "https://cdn.iconscout.com/icon/free/png-256/gallery-187-902099.png" : item.assets[0]
                         return (<ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />)

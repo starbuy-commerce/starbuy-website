@@ -1,6 +1,7 @@
 import User from "../model/User";
 import {authorized_headers, default_headers, proxied_host} from "./spec";
 import Address from "../model/Address";
+import {Response} from "../model/Response";
 
 export interface Login { username: string, password: string}
 export interface AuthResponse { status: boolean, message: string, user: User, jwt: string } 
@@ -21,6 +22,14 @@ export function get_user(username: string, callback: (resp: {user: User, rating:
     fetch(proxied_host + "user/" + username, {
         method: 'GET', headers: default_headers
     }).then(resp => resp.json()).then(json => callback(json as {user: User, rating: number}))
+}
+
+export function update_profile_picture(image: string, token: string, callback: (resp: Response) => void) {
+    fetch(proxied_host + "profile_picture", {
+        method: 'POST', headers: authorized_headers(token), body: JSON.stringify({
+            imageB64: image
+        })
+    }).then(resp => resp.json()).then(json => callback(json as Response))
 }
 
 export function get_addresses(username: string, token: string, callback: (resp: Address[]) => void) {

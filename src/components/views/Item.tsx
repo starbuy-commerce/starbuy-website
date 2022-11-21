@@ -108,7 +108,6 @@ export default function Item() {
     }
 
     function deleteItem() {
-        alert("deletou")
         delete_item(id!, cookies.access_token, (resp: Response) => {
             alert(resp.message)
             if(resp.status) {
@@ -151,7 +150,7 @@ export default function Item() {
                             : <Skeleton variant="rectangular" animation="pulse" width={380} height={380}/>
                         }
                     </div>
-                    <div className="md:w-3/5">
+                    <div className="md:w-3/5 flex flex-col justify-between">
                         <div>
                             {title !== ""
                                 ? <p className="text-2xl font-inter font-semibold ml-2 mr-2 text-gray-800">{title}</p>
