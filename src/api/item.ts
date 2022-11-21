@@ -35,6 +35,12 @@ export function query_category(category: number, callback: (resp: ItemWithAssets
     }).then(resp => resp.json()).then(json => callback(json as ItemWithAssets[]))
 }
 
+export function delete_item(item: string, token: string, callback: (resp: Response) => void) {
+    fetch(proxied_host + "item/" + item, {
+        method: 'DELETE', headers: authorized_headers(token)
+    }).then(resp => resp.json()).then(json => callback(json as Response))
+}
+
 interface RawItem { title: string, price: number, stock: number, category: number, description: string, image: string }
 export function post_item(token: string, item: RawItem, callback: (resp: Response) => void) {
     const value = {
@@ -53,7 +59,7 @@ export function post_item(token: string, item: RawItem, callback: (resp: Respons
     };
     console.log(item)
     console.log(JSON.stringify(value))
-    fetch(proxied_host + "item/", {
+    fetch(proxied_host + "item", {
         method: 'POST', headers: authorized_headers(token), body: JSON.stringify(value)})
         .then(resp => resp.json()).then(json => callback(json as Response))
 }

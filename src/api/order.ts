@@ -5,7 +5,9 @@ import Order from "../model/Order";
 export function post_order(item: string, quantity: number, token: string, endereco: string, callback: (resp: Response) => void) {
     fetch(proxied_host + "order", { headers: authorized_headers(token), method: "POST", 
         body: JSON.stringify({
-            send_to: endereco
+            send_to: endereco,
+            item: item,
+            quantity: quantity
         })}).then(resp => resp.json()).then(json => callback(json as Response))
 }
 

@@ -101,8 +101,9 @@ export default function OrderCheckout() {
 
         post_order(itemId!, parseInt(quantity!), cookies.access_token, endereco.value, (resp: Response) => {
             if (!resp.status) {
-                setErrorSnack(true);
-                setErrorMessage(resp.message);
+                setErrorSnack(true)
+                setErrorMessage(resp.message)
+                return
             }
             window.location.href = "/orders"
             setSuccessSnack(true);

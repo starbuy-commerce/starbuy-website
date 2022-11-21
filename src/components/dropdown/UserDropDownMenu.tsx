@@ -5,7 +5,7 @@ import UserStorage from "../../model/UserStorage";
 
 type Prop = { visible: boolean };
 
-export default function UserDropDownMenu({ visible }: Prop) {
+export default function UserDropDownMenu({ visible}: Prop) {
 
     const sections = [
         {
@@ -53,11 +53,11 @@ export default function UserDropDownMenu({ visible }: Prop) {
             {sections.map((section, i, arr) => {
                 return (
                     <>
-                        <div className={`flex px-2 hover:cursor-pointer hover:bg-gray-100 text-yel text-gray-700 fill-gray-700`} onClick={() => { if(isActive) section.trigger()}}>
+                        <div className={`flex px-2 ${isActive? "hover:cursor-pointer" : ""} hover:bg-gray-100 text-yel text-gray-700 fill-gray-700`} onClick={() => { if(isActive) section.trigger()}}>
                             <svg className={"my-auto w-6 h-6 ml-2"}><path d={section.svg}/></svg>
                             <p className="font-inter ml-6 font-bold my-3">{section.name}</p>
                         </div>
-                        {i != arr.length-1 && <hr/>}
+                        {i !== arr.length-1 && <hr/>}
                     </>
                 )
             })}

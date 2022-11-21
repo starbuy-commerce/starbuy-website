@@ -8,8 +8,8 @@ type Props = {
 export default function ProductCard({ img, name, price, id }: Props) {
     var formated: string = name;
 
-    if(formated.length > 40) {
-        formated = name.substring(0, 40) + "..."
+    if(formated.length > 30) {
+        formated = name.substring(0, 30) + "..."
     }
 
     var priceFormatted = price.toFixed(2).toString().replaceAll(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");

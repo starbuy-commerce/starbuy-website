@@ -27,6 +27,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import CategorySwiper from "../CategorySwiper";
 
 const Home = () => {
 
@@ -66,8 +67,9 @@ const Home = () => {
         <>
             <Navbar fixed={true} bottomBar={true}/>
             <div className="mt-32 mb-10">
-                <p className="text-center font-rubik mb-12 text-xl text-gray-700 font-normal"><span
-                    className="text-indigo-600 font-bold">Explore</span> nossos produtos:</p>
+                <p className="text-center font-rubik mb-2 text-4xl text-gray-700 font-normal"><span
+                    className="text-purple-500 font-extrabold">Bem-vindo à</span> <span className="text-yellow-300 font-extrabold">Starbuy</span></p>
+                <p className="text-center font-rubik mb-12 text-sm">Compre e venda produtos online de maneira prática e lucrativa.</p>
                 <div className="md:flex gap-6 justify-center hidden">
                     <CategoryButton img={tech} size="w-6 h-6" category="Eletrônico" id={1}/>
                     <CategoryButton img={clothes} size="w-6 h-6" category="Vestuário" id={2}/>
@@ -84,42 +86,22 @@ const Home = () => {
 
                 {
                     (category === undefined && query === undefined) ?
-                        <Swiper
-                            slidesPerView={3}
-                            loop={true}
-                            breakpoints={{
-                                320: {
-                                    slidesPerView: 4,
-                                    spaceBetween: 0
-                                },
-                                768: {
-                                    spaceBetween: 30,
-                                    slidesPerView: 8,
-                                },
-                            }}
-                        >
-                            {(received && items !== null && items.length > 0) ?
-                                items.map(item => {
-                                    const image: string = item.assets === null ? "https://cdn.iconscout.com/icon/free/png-256/gallery-187-902099.png" : item.assets[0]
-                                    return (
-                                        <SwiperSlide className="p-8">
-                                            <ProductCard img={image} name={item.item.title} price={item.item.price}
-                                                         id={item.item.identifier}/>
-                                        </SwiperSlide>
-                                    )
-                                })
-                                : (received && (items === null || items.length === 0)) ?
-                                    <p>Nenhum item encontrado</p>
-                                    :
-                                    <div className="flex gap-x-16 mx-auto mt-12">
-                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                        <Skeleton variant="rectangular" animation="wave" width={210} height={310}/>
-                                    </div>
-                            }
-                        </Swiper>
+                        <div>
+                            <p className="font-light mt-4 font-inter ml-12 text-lg">Explore eletrônicos:</p>
+                            <CategorySwiper items={items} category={1}/>
+                            <p className="font-light mt-4 font-inter ml-12 text-lg">Explore vestuário:</p>
+                            <CategorySwiper items={items} category={2}/>
+                            <p className="font-light mt-4 font-inter ml-12 text-lg">Explore produtos para casa:</p>
+                            <CategorySwiper items={items} category={3}/>
+                            <p className="font-light mt-4 font-inter ml-12 text-lg">Explore livros:</p>
+                            <CategorySwiper items={items} category={4}/>
+                            <p className="font-light mt-4 font-inter ml-12 text-lg">Explore papelaria:</p>
+                            <CategorySwiper items={items} category={5}/>
+                            <p className="font-light mt-4 font-inter ml-12 text-lg">Explore jogos:</p>
+                            <CategorySwiper items={items} category={6}/>
+                            <p className="font-light mt-4 font-inter ml-12 text-lg">Explore música:</p>
+                            <CategorySwiper items={items} category={7}/>
+                        </div>
                         :
                         <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-12 justify-center z-0">
                             {items === null ? <p>Nenhum item encontrado</p>

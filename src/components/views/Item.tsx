@@ -11,12 +11,13 @@ import {Rating, Skeleton, Snackbar, ThemeProvider} from "@mui/material";
 import {proxied_host} from "../../api/spec"
 import User from "../../model/User";
 import UserStorage from "../../model/UserStorage";
-import {get_item_with_reviews, ItemWithReviews} from "../../api/item";
+import {delete_item, get_item_with_reviews, ItemWithReviews} from "../../api/item";
 import ItemWithAssets from "../../model/ItemWithAssets";
 import {post_cart} from "../../api/cart";
 import {Response} from "../../model/Response";
 import {get_user_received_reviews, post_review, ReviewsWithAverage} from "../../api/review";
 import {theme} from "../../theme/theme";
+import trash from "../../images/trash.svg"
 
 type Props = {
     img: string,
@@ -78,7 +79,7 @@ export default function Item() {
             }
             setSeller(item.item.item.seller);
 
-            if (reviews.length != 0) {
+            if (reviews.length !== 0) {
                 reviews.map((review: any) => {
                     setRateSum(rateSum + review.rate)
                 })
@@ -89,7 +90,6 @@ export default function Item() {
     useEffect(() => {
         if (seller !== undefined) {
             get_user_received_reviews(seller!.username, (resp: ReviewsWithAverage) => {
-                console.log(resp.average)
                 setSellerRating(resp.average);
             });
         }
@@ -104,6 +104,17 @@ export default function Item() {
             }
             setSuccessSnack(true);
             setSuccessMessage(resp.message);
+        })
+    }
+
+    function deleteItem() {
+        alert("deletou")
+        delete_item(id!, cookies.access_token, (resp: Response) => {
+            alert(resp.message)
+            if(resp.status) {
+                window.location.href = "/user"
+                return
+            }
         })
     }
 
@@ -186,8 +197,8 @@ export default function Item() {
                         </div>
                     </div>
                 </div>
-                <div className="md:w-1/4">
-                    <div className="bg-white w-full border-[1px] p-4 border-purple-600 mt-4 md:mt-0 md:ml-5 rounded-xl">
+                <div className="md:w-1/4 flex flex-col justify-between">
+                    <div className="bg-white w-full border-[1px] p-4 border-purple-600 mt-4 mb-5 md:mt-0 md:ml-5 rounded-xl">
                         <p className="mb-4 font-inter text-sm font-light">Vendedor(a):</p>
                         <div className="ml-4">
                             <div className="flex">
@@ -221,6 +232,12 @@ export default function Item() {
                                     size="small"/>
                         </div>
                     </div>
+                    {(seller !== undefined && UserStorage.getUsername() === seller?.username) &&
+                        <div onClick={deleteItem} className="z-10 border-red-500 border-[1px] cursor-pointer md:mt-0 md:ml-5 w-full bg-white p-4 flex justify-center rounded-xl gap-4">
+                            <img src={trash} className="w-6 h-6" alt=""/>
+                            <p className="text-red-500">Deletar item</p>
+                        </div>
+                    }
                 </div>
             </div>
             <div className="p-5 pt-0 bg-gray-100">

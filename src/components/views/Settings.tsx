@@ -31,23 +31,19 @@ export default function Settings() {
 
     useEffect(() => {
         get_addresses(UserStorage.getUsername(), cookies.access_token, resp => {
-            const fullAddresses: any[] = [];
             if (resp !== null) {
                 resp.forEach(r => {
                     fetch("https://viacep.com.br/ws/" + r.cep + "/json/",
                         {method: 'GET', headers: default_headers}
                     ).then(resp => resp.json()).then(json => {
-                        fullAddresses.push(
-                            {
-                                identifier: r.identifier,
-                                name: r.name,
-                                info: json as CEPApiResponse,
-                                number: r.number
-                            }
-                        )
+                        setAddresses((previous: any[]) => [...previous, {
+                            identifier: r.identifier,
+                            name: r.name,
+                            info: json as CEPApiResponse,
+                            number: r.number
+                        }])
                     })
                 })
-                setAddresses(fullAddresses)
             }
         })
     }, [])

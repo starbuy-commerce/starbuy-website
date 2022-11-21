@@ -4,6 +4,8 @@ import UserStorage from "../../model/UserStorage";
 import Navbar from "../Navbar";
 import { proxied_host } from "../../api/spec"
 import ProductCard from "../card/ProductCard";
+import {get_user_received_reviews, ReviewsWithAverage} from "../../api/review";
+import {Rating} from "@mui/material";
 
 export default function User() {
     
@@ -11,9 +13,16 @@ export default function User() {
     const [city, setCity] = useState<string>("")
     const [items, setItems] = useState<any[]>([])
     const [profilePicture, setPfp] = useState<string>("")
+    const [rating, setRating] = useState(0)
 
     const {username} = useParams();
     const path = username === undefined ? UserStorage.getUsername() : "/" + username;
+
+    useEffect(() => {
+        get_user_received_reviews(username === undefined ? UserStorage.getUsername() : username, (resp: ReviewsWithAverage) => {
+            setRating(resp.average);
+        });
+    }, [])
 
     useEffect(() => {
         fetch(proxied_host + 'user/' + path + "?includeItems=true", {
@@ -37,9 +46,18 @@ export default function User() {
             <Navbar fixed={false} bottomBar={false}/>
             <div className="w-full h-24 from-[#6366F1] via-[#6366F1] to-[#7ED8FF] bg-gradient-to-r relative visible">
                 <div>
-                    <p className="font-inter text-white absolute mt-8 ml-48 font-bold text-xl">
-                        {name.toUpperCase()}
-                    </p>
+                    <div className="flex gap-4 font-inter text-white absolute mt-8 ml-48 font-bold text-xl">
+                        <p>
+                            {name.toUpperCase()}
+                        </p>
+                        <Rating className="mt-1 fill-yellow-300" precision={0.5} name="read-only" value={rating}
+                                sx={{
+                                    '& .MuiRating-iconFilled': {
+                                        color: '#fde047',
+                                    }
+                                }}
+                                readOnly size="small"/>
+                    </div>
                     <p className="font-inter text-white absolute mt-16 ml-48 font-light text-sm">
                         {city.toUpperCase()}
                     </p>
@@ -49,7 +67,7 @@ export default function User() {
 
             <p className="font-inter text-lg text-gray-700 font-semibold md:pl-24 pt-24">Produtos desse usuário:</p>
             <div className="flex gap-6 flex-wrap md:pr-24 md:pl-24 md:gap-y-7 mt-6 justify-center z-0">
-                {items === null ? <p>Nenhum item encontrado</p>
+                {items === null || items.length == 0 ? <p>Nenhum item encontrado</p>
                     : items.map(item => {
                         const image: string = item.assets === null ? "https://cdn.iconscout.com/icon/free/png-256/gallery-187-902099.png" : item.assets[0]
                         return (<ProductCard img={image} name={item.item.title} price={item.item.price} id={item.item.identifier} />)

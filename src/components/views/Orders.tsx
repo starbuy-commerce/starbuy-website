@@ -30,10 +30,10 @@ export default function Orders() {
                                         className="w-11/12 h-2/5 mb-12 border-[1px] border-yellow-400 mx-auto rounded-lg">
                                         <div className="flex mb-6 mt-6 ">
                                             <img className="h-48 w-48 ml-8 my-auto hover:cursor-pointer"
-                                                 onClick={() => window.location.href = "item/" + order.item.item.identifier}
-                                                 src={order.item.assets[0]} alt=""/>
+                                                 onClick={() => window.location.href = "item/" + order.item_with_assets.item.identifier}
+                                                 src={order.item_with_assets.assets[0]} alt=""/>
                                             <div className="text-md font-medium ml-10 text-md">
-                                                <p className="font-bold mr-4 mt-2">{order.item.item.title} - Comprado
+                                                <p className="font-bold mr-4 mt-2">{order.item_with_assets.item.title} - Comprado
                                                     em: {new Date(Date.parse(order.date)).toLocaleDateString()}</p>
                                                 <p className="mt-4">Preço total: R$ {order.price}</p>
                                                 <p>Quantidade: {order.quantity} unidade(s)</p>
